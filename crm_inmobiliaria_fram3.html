@@ -20,6 +20,19 @@
     --text3: #555570;
     --gold: #f5c542;
   }
+  .light-mode {
+    --bg: #f0f2f5;
+    --surface: #ffffff;
+    --surface2: #f0f2f5;
+    --border: #d0d5dd;
+    --accent: #5b52e0;
+    --accent2: #e03030;
+    --accent3: #1a8a4a;
+    --text: #111827;
+    --text2: #4b5563;
+    --text3: #9ca3af;
+    --gold: #b45309;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; height: 100vh; display: flex; overflow: hidden; }
 
@@ -309,6 +322,7 @@
       <span id="authStatus" style="font-size:11px;color:var(--text3);display:flex;align-items:center;gap:6px;">
         <span class="dot dot-red"></span>Sin conexión Outlook
       </span>
+      <button class="btn btn-sm" onclick="toggleTheme()" id="themeBtn" title="Cambiar tema">🌙</button>
       <button class="btn btn-sm btn-primary" onclick="showModal('modalNuevoContacto')">+ Contacto</button>
     </div>
   </div>
@@ -1519,6 +1533,23 @@ function updateFileList(inputId, listId) {
 function getFiles(inputId) {
   const el = document.getElementById(inputId);
   return el ? Array.from(el.files) : [];
+}
+
+// ==================== THEME ====================
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light-mode');
+  document.getElementById('themeBtn').textContent = isLight ? '☀️' : '🌙';
+  localStorage.setItem('fram_theme', isLight ? 'light' : 'dark');
+}
+
+// Load saved theme
+const savedTheme = localStorage.getItem('fram_theme');
+if (savedTheme === 'light') {
+  document.body.classList.add('light-mode');
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('themeBtn');
+    if (btn) btn.textContent = '☀️';
+  });
 }
 
 // ==================== INIT ====================
