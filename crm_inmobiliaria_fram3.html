@@ -21,7 +21,7 @@
     --gold: #f5c542;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; overflow: hidden; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; height: 100vh; display: flex; overflow: hidden; }
 
   /* SIDEBAR */
   .sidebar {
@@ -58,7 +58,7 @@
   .user-role { font-size: 10px; color: var(--text3); }
 
   /* MAIN */
-  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .main { flex: 1; display: flex; flex-direction: column; min-height: 0; }
   .topbar {
     height: 56px; border-bottom: 1px solid var(--border);
     display: flex; align-items: center; justify-content: space-between;
@@ -67,7 +67,7 @@
   .topbar-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
   .topbar-actions { display: flex; gap: 8px; align-items: center; }
 
-  .content { flex: 1; overflow-y: auto; padding: 24px; height: 0; }
+  .content { flex: 1; overflow-y: auto; padding: 24px; min-height: 0; }
 
   /* SECTION */
   .section { display: none; }
