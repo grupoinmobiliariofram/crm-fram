@@ -1085,15 +1085,35 @@ function savePerfilChanges() {
 // ==================== RENDER ====================
 function filterContacts() { renderContacts(); }
 
+function resetFilters() {
+  ['searchInput','filterStatus','filterDesarrollo','filterPresupuesto','filterCredito','filterFuente','filterCorreos'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  renderContacts();
+}
+
+function getContactEmailCount(id) {
+  return emails.filter(e => e.contactId === id).length;
+}
+
 function renderContacts() {
   const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
   const status = document.getElementById('filterStatus')?.value || '';
   const desarrollo = document.getElementById('filterDesarrollo')?.value || '';
+  const presupuesto = document.getElementById('filterPresupuesto')?.value || '';
+  const credito = document.getElementById('filterCredito')?.value || '';
+  const fuente = document.getElementById('filterFuente')?.value || '';
+  const minCorreos = parseInt(document.getElementById('filterCorreos')?.value || '');
   const filtered = contacts.filter(c => {
-    const matchSearch = c.nombre.toLowerCase().includes(search) || c.correo.toLowerCase().includes(search);
+    const matchSearch = !search || c.nombre.toLowerCase().includes(search) || c.correo.toLowerCase().includes(search);
     const matchStatus = !status || c.estado === status;
     const matchDesarrollo = !desarrollo || c.desarrollo === desarrollo;
-    return matchSearch && matchStatus && matchDesarrollo;
+    const matchPresupuesto = !presupuesto || c.presupuesto === presupuesto;
+    const matchCredito = !credito || c.credito === credito;
+    const matchFuente = !fuente || c.fuente === fuente;
+    const matchCorreos = isNaN(minCorreos) || getContactEmailCount(c.id) >= minCorreos;
+    return matchSearch && matchStatus && matchDesarrollo && matchPresupuesto && matchCredito && matchFuente && matchCorreos;
   });
   document.getElementById('contactCount').textContent = filtered.length;
   const el = document.getElementById('contactsTable');
@@ -1103,12 +1123,14 @@ function renderContacts() {
   }
   el.innerHTML = filtered.map(c => {
     const col = getColor(c.nombre);
-    return `<div class="table-row" style="grid-template-columns:36px 1fr 100px 90px 110px 130px;" onclick="openPerfil(${c.id})" title="Ver perfil">
+    const emailCount = getContactEmailCount(c.id);
+    return `<div class="table-row" style="grid-template-columns:36px 1fr 90px 80px 110px 70px 110px;" onclick="openPerfil(${c.id})" title="Ver perfil">
       <div class="contact-avatar" style="background:${col.bg};color:${col.color}">${getInitials(c.nombre)}</div>
       <div><div style="font-weight:500;">${c.nombre}</div><div style="font-size:11px;color:var(--text3);">${c.correo}</div></div>
       <div style="font-size:12px;color:var(--text2);">${c.telefono||'—'}</div>
       <div>${badgeHTML(c.estado)}</div>
       <div style="font-size:11px;color:var(--text3);">${c.desarrollo||'—'}</div>
+      <div style="font-size:12px;text-align:center;"><span style="background:var(--surface2);padding:2px 8px;border-radius:12px;">${emailCount}</span></div>
       <div style="display:flex;gap:6px;" onclick="event.stopPropagation()">
         <button class="btn btn-sm" onclick="openIndividual(${c.id})" title="Enviar correo">✉️</button>
         <button class="btn btn-sm btn-danger" onclick="deleteContact(${c.id})" title="Eliminar">✕</button>
