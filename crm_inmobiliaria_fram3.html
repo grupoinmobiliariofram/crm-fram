@@ -613,6 +613,95 @@
   </div>
 </div>
 
+<!-- MODAL PERFIL DE CONTACTO -->
+<div class="modal-overlay" id="modalPerfil">
+  <div class="modal" style="width:560px;max-width:95vw;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div id="perfilAvatar" style="width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;"></div>
+        <div>
+          <div id="perfilNombre" style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;"></div>
+          <div id="perfilCorreo" style="font-size:12px;color:var(--text3);"></div>
+        </div>
+      </div>
+      <button class="btn btn-sm" onclick="closeModal('modalPerfil')">✕</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+      <div class="form-group" style="margin:0;">
+        <label class="form-label">Nombre</label>
+        <input class="form-input" id="perfilEditNombre" placeholder="Nombre completo">
+      </div>
+      <div class="form-group" style="margin:0;">
+        <label class="form-label">Teléfono</label>
+        <input class="form-input" id="perfilEditTel" placeholder="55 1234 5678">
+      </div>
+      <div class="form-group" style="margin:0;">
+        <label class="form-label">Estado</label>
+        <select class="form-select" id="perfilEditEstado">
+          <option>Lead</option><option>Cliente</option><option>Cerrado</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin:0;">
+        <label class="form-label">Desarrollo de interés</label>
+        <select class="form-select" id="perfilEditDesarrollo">
+          <option value="">Sin definir</option>
+          <option value="La Floresta">🌿 La Floresta</option>
+          <option value="Real del Lago">🏡 Real del Lago</option>
+          <option value="Vivace">🏙️ Vivace</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin:0;">
+        <label class="form-label">Presupuesto aproximado</label>
+        <select class="form-select" id="perfilEditPresupuesto">
+          <option value="">Sin definir</option>
+          <option value="Menos de $2M">Menos de $2M</option>
+          <option value="$2M - $3M">$2M - $3M</option>
+          <option value="$3M - $5M">$3M - $5M</option>
+          <option value="$5M - $6M">$5M - $6M</option>
+          <option value="Más de $6M">Más de $6M</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin:0;">
+        <label class="form-label">Crédito</label>
+        <select class="form-select" id="perfilEditCredito">
+          <option value="">Sin definir</option>
+          <option value="Infonavit aprobado">✅ Infonavit aprobado</option>
+          <option value="Hipotecario aprobado">✅ Hipotecario aprobado</option>
+          <option value="En proceso">⏳ En proceso</option>
+          <option value="Sin crédito">❌ Sin crédito</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Fuente del lead</label>
+      <select class="form-select" id="perfilEditFuente">
+        <option value="">Sin definir</option>
+        <option value="Meta">Meta (Facebook/Instagram)</option>
+        <option value="Página web">Página web</option>
+        <option value="Desarrollo">Publicidad en desarrollo</option>
+        <option value="Referido">Referido</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Notas de seguimiento</label>
+      <textarea class="form-textarea" id="perfilEditNotas" style="min-height:80px;" placeholder="Interesado en modelo Nogal, tiene Infonavit de $800k..."></textarea>
+    </div>
+
+    <div style="background:var(--surface2);border-radius:8px;padding:12px;margin-bottom:16px;">
+      <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;font-weight:600;">Historial de correos</div>
+      <div id="perfilEmailHistory" style="font-size:12px;color:var(--text2);"></div>
+    </div>
+
+    <div style="display:flex;gap:8px;">
+      <button class="btn" style="flex:1;" onclick="openIndividual(currentPerfilId);closeModal('modalPerfil')">✉️ Enviar correo</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="savePerfilChanges()">💾 Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL PREVIEW -->
 <div class="modal-overlay" id="modalPreview">
   <div class="modal" style="max-width:540px;">
@@ -643,6 +732,7 @@ const SCOPES = ["Mail.Send", "Mail.ReadWrite", "User.Read"];
 let contacts = JSON.parse(localStorage.getItem('fram_contacts') || '[]');
 let emails = JSON.parse(localStorage.getItem('fram_emails') || '[]');
 let currentContactId = null;
+let currentPerfilId = null;
 let accessToken = null;
 let currentUser = null;
 
@@ -938,16 +1028,72 @@ function importCSV(input) {
   reader.readAsText(file);
 }
 
+// ==================== PERFIL ====================
+function openPerfil(id) {
+  const c = contacts.find(x => x.id === id);
+  if (!c) return;
+  currentPerfilId = id;
+  const col = getColor(c.nombre);
+
+  document.getElementById('perfilAvatar').style.background = col.bg;
+  document.getElementById('perfilAvatar').style.color = col.color;
+  document.getElementById('perfilAvatar').textContent = getInitials(c.nombre);
+  document.getElementById('perfilNombre').textContent = c.nombre;
+  document.getElementById('perfilCorreo').textContent = c.correo;
+  document.getElementById('perfilEditNombre').value = c.nombre || '';
+  document.getElementById('perfilEditTel').value = c.telefono || '';
+  document.getElementById('perfilEditEstado').value = c.estado || 'Lead';
+  document.getElementById('perfilEditDesarrollo').value = c.desarrollo || '';
+  document.getElementById('perfilEditPresupuesto').value = c.presupuesto || '';
+  document.getElementById('perfilEditCredito').value = c.credito || '';
+  document.getElementById('perfilEditFuente').value = c.fuente || '';
+  document.getElementById('perfilEditNotas').value = c.notas || '';
+
+  const emailHistory = emails.filter(e => e.contactId === id);
+  const historyEl = document.getElementById('perfilEmailHistory');
+  if (emailHistory.length) {
+    historyEl.innerHTML = emailHistory.reverse().map(e =>
+      `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:0.5px solid var(--border);">
+        <span>📧 ${e.subject}</span>
+        <span style="color:var(--text3);">${e.fecha}</span>
+      </div>`
+    ).join('');
+  } else {
+    historyEl.innerHTML = '<span style="color:var(--text3);">Sin correos enviados aún</span>';
+  }
+
+  showModal('modalPerfil');
+}
+
+function savePerfilChanges() {
+  const idx = contacts.findIndex(x => x.id === currentPerfilId);
+  if (idx === -1) return;
+  contacts[idx].nombre = document.getElementById('perfilEditNombre').value.trim();
+  contacts[idx].telefono = document.getElementById('perfilEditTel').value.trim();
+  contacts[idx].estado = document.getElementById('perfilEditEstado').value;
+  contacts[idx].desarrollo = document.getElementById('perfilEditDesarrollo').value;
+  contacts[idx].presupuesto = document.getElementById('perfilEditPresupuesto').value;
+  contacts[idx].credito = document.getElementById('perfilEditCredito').value;
+  contacts[idx].fuente = document.getElementById('perfilEditFuente').value;
+  contacts[idx].notas = document.getElementById('perfilEditNotas').value.trim();
+  saveContacts();
+  closeModal('modalPerfil');
+  renderAll();
+  showToast('✅ Perfil actualizado', 'success');
+}
+
 // ==================== RENDER ====================
-function filterContacts(val) { renderContacts(); }
+function filterContacts() { renderContacts(); }
 
 function renderContacts() {
   const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
   const status = document.getElementById('filterStatus')?.value || '';
+  const desarrollo = document.getElementById('filterDesarrollo')?.value || '';
   const filtered = contacts.filter(c => {
     const matchSearch = c.nombre.toLowerCase().includes(search) || c.correo.toLowerCase().includes(search);
     const matchStatus = !status || c.estado === status;
-    return matchSearch && matchStatus;
+    const matchDesarrollo = !desarrollo || c.desarrollo === desarrollo;
+    return matchSearch && matchStatus && matchDesarrollo;
   });
   document.getElementById('contactCount').textContent = filtered.length;
   const el = document.getElementById('contactsTable');
@@ -957,12 +1103,13 @@ function renderContacts() {
   }
   el.innerHTML = filtered.map(c => {
     const col = getColor(c.nombre);
-    return `<div class="table-row" style="grid-template-columns:36px 1fr 110px 90px 120px;">
+    return `<div class="table-row" style="grid-template-columns:36px 1fr 100px 90px 110px 130px;" onclick="openPerfil(${c.id})" title="Ver perfil">
       <div class="contact-avatar" style="background:${col.bg};color:${col.color}">${getInitials(c.nombre)}</div>
       <div><div style="font-weight:500;">${c.nombre}</div><div style="font-size:11px;color:var(--text3);">${c.correo}</div></div>
       <div style="font-size:12px;color:var(--text2);">${c.telefono||'—'}</div>
       <div>${badgeHTML(c.estado)}</div>
-      <div style="display:flex;gap:6px;">
+      <div style="font-size:11px;color:var(--text3);">${c.desarrollo||'—'}</div>
+      <div style="display:flex;gap:6px;" onclick="event.stopPropagation()">
         <button class="btn btn-sm" onclick="openIndividual(${c.id})" title="Enviar correo">✉️</button>
         <button class="btn btn-sm btn-danger" onclick="deleteContact(${c.id})" title="Eliminar">✕</button>
       </div>
