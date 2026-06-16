@@ -334,10 +334,61 @@
       <div class="metrics" id="dashMetrics"></div>
       <div class="section-header">
         <span class="section-title" style="font-size:14px;">Actividad reciente</span>
+        <button class="btn btn-sm" onclick="resetDashFilters()">↺ Limpiar</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+        <input class="form-input" style="max-width:160px;font-size:12px;" placeholder="🔍 Buscar..." oninput="renderDashboard()" id="dashSearch">
+        <select class="form-select" style="max-width:120px;font-size:12px;" onchange="renderDashboard()" id="dashFilterStatus">
+          <option value="">Estado</option>
+          <option value="Lead">Lead</option>
+          <option value="Cliente">Cliente</option>
+          <option value="Cerrado">Cerrado</option>
+        </select>
+        <select class="form-select" style="max-width:150px;font-size:12px;" onchange="renderDashboard()" id="dashFilterDesarrollo">
+          <option value="">Desarrollo</option>
+          <option value="La Floresta">🌿 La Floresta</option>
+          <option value="Real del Lago">🏡 Real del Lago</option>
+          <option value="Vivace">🏙️ Vivace</option>
+        </select>
+        <select class="form-select" style="max-width:150px;font-size:12px;" onchange="renderDashboard()" id="dashFilterPresupuesto">
+          <option value="">Presupuesto</option>
+          <option value="Menos de $2M">Menos de $2M</option>
+          <option value="$2M - $3M">$2M - $3M</option>
+          <option value="$3M - $5M">$3M - $5M</option>
+          <option value="$5M - $6M">$5M - $6M</option>
+          <option value="Más de $6M">Más de $6M</option>
+        </select>
+        <select class="form-select" style="max-width:170px;font-size:12px;" onchange="renderDashboard()" id="dashFilterCredito">
+          <option value="">Crédito</option>
+          <option value="Infonavit aprobado">✅ Infonavit aprobado</option>
+          <option value="Hipotecario aprobado">✅ Hipotecario aprobado</option>
+          <option value="En proceso">⏳ En proceso</option>
+          <option value="Sin crédito">❌ Sin crédito</option>
+        </select>
+        <select class="form-select" style="max-width:140px;font-size:12px;" onchange="renderDashboard()" id="dashFilterFuente">
+          <option value="">Fuente</option>
+          <option value="Meta">Meta</option>
+          <option value="Página web">Página web</option>
+          <option value="Desarrollo">Desarrollo</option>
+          <option value="Referido">Referido</option>
+        </select>
+        <select class="form-select" style="max-width:150px;font-size:12px;" onchange="renderDashboard()" id="dashFilterCorreos">
+          <option value="">Correos enviados</option>
+          <option value="0">Sin correos</option>
+          <option value="1">1 o más</option>
+          <option value="3">3 o más</option>
+          <option value="5">5 o más</option>
+        </select>
+        <select class="form-select" style="max-width:140px;font-size:12px;" onchange="renderDashboard()" id="dashFilterOrden">
+          <option value="reciente">Más recientes</option>
+          <option value="antiguo">Más antiguos</option>
+          <option value="nombre">Nombre A-Z</option>
+          <option value="correos">Más correos</option>
+        </select>
       </div>
       <div class="table-wrap">
-        <div class="table-head" style="grid-template-columns:36px 1fr 100px 90px 100px;">
-          <div></div><div>Contacto</div><div>Teléfono</div><div>Estado</div><div>Último correo</div>
+        <div class="table-head" style="grid-template-columns:36px 1fr 90px 80px 110px 60px 100px;">
+          <div></div><div>Contacto</div><div>Teléfono</div><div>Estado</div><div>Desarrollo</div><div>📧</div><div>Último correo</div>
         </div>
         <div id="dashTable"></div>
       </div>
@@ -1139,6 +1190,16 @@ function renderContacts() {
   }).join('');
 }
 
+function resetDashFilters() {
+  ['dashSearch','dashFilterStatus','dashFilterDesarrollo','dashFilterPresupuesto','dashFilterCredito','dashFilterFuente','dashFilterCorreos'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const orden = document.getElementById('dashFilterOrden');
+  if (orden) orden.value = 'reciente';
+  renderDashboard();
+}
+
 function renderDashboard() {
   const totalContacts = contacts.length;
   const leads = contacts.filter(c=>c.estado==='Lead').length;
@@ -1150,23 +1211,52 @@ function renderDashboard() {
     <div class="metric-card"><div class="metric-label">Clientes</div><div class="metric-val green">${clientes}</div></div>
     <div class="metric-card"><div class="metric-label">Correos enviados</div><div class="metric-val gold">${totalEmails}</div></div>
   `;
-  const recent = [...contacts].slice(-5).reverse();
+
+  const search = (document.getElementById('dashSearch')?.value || '').toLowerCase();
+  const status = document.getElementById('dashFilterStatus')?.value || '';
+  const desarrollo = document.getElementById('dashFilterDesarrollo')?.value || '';
+  const presupuesto = document.getElementById('dashFilterPresupuesto')?.value || '';
+  const credito = document.getElementById('dashFilterCredito')?.value || '';
+  const fuente = document.getElementById('dashFilterFuente')?.value || '';
+  const minCorreos = parseInt(document.getElementById('dashFilterCorreos')?.value || '');
+  const orden = document.getElementById('dashFilterOrden')?.value || 'reciente';
+
+  let filtered = contacts.filter(c => {
+    const matchSearch = !search || c.nombre.toLowerCase().includes(search) || c.correo.toLowerCase().includes(search);
+    const matchStatus = !status || c.estado === status;
+    const matchDesarrollo = !desarrollo || c.desarrollo === desarrollo;
+    const matchPresupuesto = !presupuesto || c.presupuesto === presupuesto;
+    const matchCredito = !credito || c.credito === credito;
+    const matchFuente = !fuente || c.fuente === fuente;
+    const matchCorreos = isNaN(minCorreos) || getContactEmailCount(c.id) >= minCorreos;
+    return matchSearch && matchStatus && matchDesarrollo && matchPresupuesto && matchCredito && matchFuente && matchCorreos;
+  });
+
+  // Sort
+  if (orden === 'reciente') filtered = filtered.slice().reverse();
+  else if (orden === 'antiguo') filtered = filtered.slice();
+  else if (orden === 'nombre') filtered = filtered.slice().sort((a,b) => a.nombre.localeCompare(b.nombre));
+  else if (orden === 'correos') filtered = filtered.slice().sort((a,b) => getContactEmailCount(b.id) - getContactEmailCount(a.id));
+
   const el = document.getElementById('dashTable');
-  if (!recent.length) {
-    el.innerHTML = `<div class="empty"><p>Sin contactos aún. ¡Agrega el primero!</p></div>`;
+  if (!filtered.length) {
+    el.innerHTML = `<div class="empty"><p>Sin resultados con estos filtros.</p></div>`;
     return;
   }
   const lastEmail = (id) => {
     const e = emails.filter(x=>x.contactId===id).pop();
     return e ? e.fecha : '—';
   };
-  el.innerHTML = recent.map(c => {
+  el.innerHTML = filtered.map(c => {
     const col = getColor(c.nombre);
-    return `<div class="table-row" style="grid-template-columns:36px 1fr 100px 90px 100px;">
+    const emailCount = getContactEmailCount(c.id);
+    return `<div class="table-row" style="grid-template-columns:36px 1fr 90px 80px 110px 60px 100px;" onclick="openPerfil(${c.id})" title="Ver perfil">
       <div class="contact-avatar" style="background:${col.bg};color:${col.color}">${getInitials(c.nombre)}</div>
       <div><div style="font-weight:500;">${c.nombre}</div><div style="font-size:11px;color:var(--text3);">${c.correo}</div></div>
       <div style="font-size:12px;color:var(--text2);">${c.telefono||'—'}</div>
       <div>${badgeHTML(c.estado)}</div>
+      <div style="font-size:11px;color:var(--text3);">${c.desarrollo||'—'}</div>
+      <div style="font-size:12px;text-align:center;"><span style="background:var(--surface2);padding:2px 8px;border-radius:12px;">${emailCount}</span></div>
       <div style="font-size:12px;color:var(--text3);">${lastEmail(c.id)}</div>
     </div>`;
   }).join('');
