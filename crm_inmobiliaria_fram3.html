@@ -441,12 +441,24 @@
         </div>
         <div class="form-group"><label class="form-label">Asunto</label><input class="form-input" id="emailSubject" placeholder="Ej: Conoce La Floresta en Cuautitlán Izcalli"></div>
         <div class="form-group"><label class="form-label">Destinatarios</label>
-          <select class="form-select" id="emailRecipients">
+          <select class="form-select" id="emailRecipients" onchange="onRecipientsChange('emailRecipients','datePickerWrap1')">
             <option value="all">Todos los contactos</option>
             <option value="Lead">Solo Leads</option>
             <option value="Cliente">Solo Clientes</option>
-            <option value="La Floresta">La Floresta (por nota)</option>
+            <option value="La Floresta">🌿 La Floresta</option>
+            <option value="Real del Lago">🏡 Real del Lago</option>
+            <option value="Vivace">🏙️ Vivace</option>
+            <option value="Meta">Fuente: Meta</option>
+            <option value="Página web">Fuente: Página web</option>
+            <option value="Desarrollo">Fuente: Desarrollo</option>
+            <option value="fecha">📅 Por fecha de registro</option>
           </select>
+          <div id="datePickerWrap1" style="display:none;margin-top:6px;">
+            <select class="form-select" id="datePicker1" style="font-size:12px;">
+              <option value="">Selecciona una fecha...</option>
+            </select>
+            <div id="datePicker1_count" style="font-size:11px;color:var(--text3);margin-top:4px;"></div>
+          </div>
         </div>
         <div class="form-group"><label class="form-label">Mensaje</label><textarea class="form-textarea" id="emailBody" placeholder="Hola {{nombre}},"></textarea></div>
 
@@ -487,11 +499,24 @@
         </div>
         <div class="form-group"><label class="form-label">Asunto</label><input class="form-input" id="emailSubject2" placeholder="Ej: Casas desde $2.2 MDP en Nicolás Romero"></div>
         <div class="form-group"><label class="form-label">Destinatarios</label>
-          <select class="form-select" id="emailRecipients2">
+          <select class="form-select" id="emailRecipients2" onchange="onRecipientsChange('emailRecipients2','datePickerWrap2')">
             <option value="all">Todos los contactos</option>
             <option value="Lead">Solo Leads</option>
             <option value="Cliente">Solo Clientes</option>
+            <option value="La Floresta">🌿 La Floresta</option>
+            <option value="Real del Lago">🏡 Real del Lago</option>
+            <option value="Vivace">🏙️ Vivace</option>
+            <option value="Meta">Fuente: Meta</option>
+            <option value="Página web">Fuente: Página web</option>
+            <option value="Desarrollo">Fuente: Desarrollo</option>
+            <option value="fecha">📅 Por fecha de registro</option>
           </select>
+          <div id="datePickerWrap2" style="display:none;margin-top:6px;">
+            <select class="form-select" id="datePicker2" style="font-size:12px;">
+              <option value="">Selecciona una fecha...</option>
+            </select>
+            <div id="datePicker2_count" style="font-size:11px;color:var(--text3);margin-top:4px;"></div>
+          </div>
         </div>
         <div class="form-group"><label class="form-label">Mensaje</label><textarea class="form-textarea" id="emailBody2" placeholder="Hola {{nombre}},"></textarea></div>
 
@@ -532,11 +557,24 @@
         </div>
         <div class="form-group"><label class="form-label">Asunto</label><input class="form-input" id="emailSubject3" placeholder="Ej: Vivace — El desarrollo más exclusivo en Atizapán"></div>
         <div class="form-group"><label class="form-label">Destinatarios</label>
-          <select class="form-select" id="emailRecipients3">
+          <select class="form-select" id="emailRecipients3" onchange="onRecipientsChange('emailRecipients3','datePickerWrap3')">
             <option value="all">Todos los contactos</option>
             <option value="Lead">Solo Leads</option>
             <option value="Cliente">Solo Clientes</option>
+            <option value="La Floresta">🌿 La Floresta</option>
+            <option value="Real del Lago">🏡 Real del Lago</option>
+            <option value="Vivace">🏙️ Vivace</option>
+            <option value="Meta">Fuente: Meta</option>
+            <option value="Página web">Fuente: Página web</option>
+            <option value="Desarrollo">Fuente: Desarrollo</option>
+            <option value="fecha">📅 Por fecha de registro</option>
           </select>
+          <div id="datePickerWrap3" style="display:none;margin-top:6px;">
+            <select class="form-select" id="datePicker3" style="font-size:12px;">
+              <option value="">Selecciona una fecha...</option>
+            </select>
+            <div id="datePicker3_count" style="font-size:11px;color:var(--text3);margin-top:4px;"></div>
+          </div>
         </div>
         <div class="form-group"><label class="form-label">Mensaje</label><textarea class="form-textarea" id="emailBody3" placeholder="Hola {{nombre}},"></textarea></div>
 
@@ -569,11 +607,24 @@
         </div>
         <div class="form-group"><label class="form-label">Asunto del correo</label><input class="form-input" id="emailSubject" placeholder="Ej: Nueva propiedad disponible en tu zona"></div>
         <div class="form-group"><label class="form-label">Destinatarios</label>
-          <select class="form-select" id="emailRecipients">
+          <select class="form-select" id="emailRecipients" onchange="onRecipientsChange('emailRecipients','datePickerWrap0')">
             <option value="all">Todos los contactos</option>
             <option value="Lead">Solo Leads</option>
             <option value="Cliente">Solo Clientes</option>
+            <option value="La Floresta">🌿 La Floresta</option>
+            <option value="Real del Lago">🏡 Real del Lago</option>
+            <option value="Vivace">🏙️ Vivace</option>
+            <option value="Meta">Fuente: Meta</option>
+            <option value="Página web">Fuente: Página web</option>
+            <option value="Desarrollo">Fuente: Desarrollo</option>
+            <option value="fecha">📅 Por fecha de registro</option>
           </select>
+          <div id="datePickerWrap0" style="display:none;margin-top:6px;">
+            <select class="form-select" id="datePicker0" style="font-size:12px;">
+              <option value="">Selecciona una fecha...</option>
+            </select>
+            <div id="datePicker0_count" style="font-size:11px;color:var(--text3);margin-top:4px;"></div>
+          </div>
         </div>
         <div class="form-group"><label class="form-label">Mensaje</label><textarea class="form-textarea" id="emailBody" placeholder="Hola {{nombre}},&#10;&#10;Te escribo porque tenemos una propiedad que puede interesarte...&#10;&#10;Saludos,&#10;Luis Velazquez&#10;Inmobiliaria Fram"></textarea></div>
 
@@ -1019,9 +1070,9 @@ async function sendCampaign(filesInputId='files1', pdfUrl=null) {
   }
   const subject = document.getElementById('emailSubject').value.trim();
   const body = document.getElementById('emailBody').value.trim();
-  const filter = document.getElementById('emailRecipients').value;
   if (!subject || !body) { showToast('Completa asunto y mensaje', 'error'); return; }
-  const targets = filter === 'all' ? contacts : contacts.filter(c=>c.estado===filter);
+  const targets = getTargetContacts('emailRecipients', 'datePickerWrap1') || getTargetContacts('emailRecipients', 'datePickerWrap0');
+  if (!targets) return;
   if (!targets.length) { showToast('No hay contactos para enviar', 'error'); return; }
   
   const prog = document.getElementById('sendProgress');
@@ -1681,9 +1732,9 @@ async function sendCampaign2() {
   currentDownloadBtn = buildDownloadBtn(PDF_URLS.lago, '');
   const subject = document.getElementById('emailSubject2').value.trim();
   const body = document.getElementById('emailBody2').value.trim();
-  const filter = document.getElementById('emailRecipients2').value;
   if (!subject || !body) { showToast('Completa asunto y mensaje', 'error'); return; }
-  const targets = filter === 'all' ? contacts : contacts.filter(c=>c.estado===filter);
+  const targets = getTargetContacts('emailRecipients2', 'datePickerWrap2');
+  if (!targets) return;
   if (!targets.length) { showToast('No hay contactos', 'error'); return; }
   const prog = document.getElementById('sendProgress2');
   const progText = document.getElementById('sendProgressText2');
@@ -1728,9 +1779,9 @@ async function sendCampaign3() {
   currentDownloadBtn = buildDownloadBtn(PDF_URLS.vivace, 'Descargar Presentación Vivace');
   const subject = document.getElementById('emailSubject3').value.trim();
   const body = document.getElementById('emailBody3').value.trim();
-  const filter = document.getElementById('emailRecipients3').value;
   if (!subject || !body) { showToast('Completa asunto y mensaje', 'error'); return; }
-  const targets = filter === 'all' ? contacts : contacts.filter(c=>c.estado===filter);
+  const targets = getTargetContacts('emailRecipients3', 'datePickerWrap3');
+  if (!targets) return;
   if (!targets.length) { showToast('No hay contactos', 'error'); return; }
   const prog = document.getElementById('sendProgress3');
   const progText = document.getElementById('sendProgressText3');
@@ -1792,6 +1843,164 @@ function updateFileList(inputId, listId) {
 function getFiles(inputId) {
   const el = document.getElementById(inputId);
   return el ? Array.from(el.files) : [];
+}
+
+// ==================== RECIPIENTS & DATE PICKER ====================
+
+function getContactDates() {
+  // Get unique dates from contacts
+  const dates = [...new Set(contacts.map(c => c.fecha).filter(Boolean))];
+  return dates.sort((a, b) => {
+    const parse = d => {
+      const [day, month, year] = d.split('/').map(Number);
+      return new Date(year, month-1, day);
+    };
+    return parse(b) - parse(a);
+  });
+}
+
+function populateDatePicker(pickerId, countId) {
+  const picker = document.getElementById(pickerId);
+  if (!picker) return;
+  const dates = getContactDates();
+  picker.innerHTML = '<option value="">Selecciona una fecha...</option>';
+  dates.forEach(date => {
+    const count = contacts.filter(c => c.fecha === date).length;
+    const opt = document.createElement('option');
+    opt.value = date;
+    opt.textContent = `${date} — ${count} contacto${count !== 1 ? 's' : ''}`;
+    picker.appendChild(opt);
+  });
+  picker.onchange = () => {
+    const date = picker.value;
+    const count = contacts.filter(c => c.fecha === date).length;
+    const countEl = document.getElementById(countId);
+    if (countEl) countEl.textContent = date ? `${count} contacto${count !== 1 ? 's' : ''} registrados este día` : '';
+  };
+}
+
+function onRecipientsChange(selectId, wrapId) {
+  const val = document.getElementById(selectId)?.value;
+  const wrap = document.getElementById(wrapId);
+  if (!wrap) return;
+  if (val === 'fecha') {
+    wrap.style.display = 'block';
+    // Find date picker inside this wrap
+    const picker = wrap.querySelector('select');
+    const countDiv = wrap.querySelector('div');
+    if (picker) {
+      const dates = getContactDates();
+      picker.innerHTML = '<option value="">Selecciona una fecha...</option>';
+      dates.forEach(date => {
+        const count = contacts.filter(c => c.fecha === date).length;
+        const opt = document.createElement('option');
+        opt.value = date;
+        opt.textContent = `${date} — ${count} contacto${count !== 1 ? 's' : ''}`;
+        picker.appendChild(opt);
+      });
+      picker.onchange = () => {
+        const date = picker.value;
+        const count = contacts.filter(c => c.fecha === date).length;
+        if (countDiv) countDiv.textContent = date ? `✅ ${count} contacto${count !== 1 ? 's' : ''} seleccionados` : '';
+      };
+    }
+  } else {
+    wrap.style.display = 'none';
+  }
+}
+
+function getTargetContacts(recipientsId, wrapId) {
+  const filter = document.getElementById(recipientsId)?.value || 'all';
+  if (filter === 'all') return contacts;
+  if (filter === 'Lead' || filter === 'Cliente' || filter === 'Cerrado') return contacts.filter(c => c.estado === filter);
+  if (filter === 'La Floresta' || filter === 'Real del Lago' || filter === 'Vivace') return contacts.filter(c => c.desarrollo === filter);
+  if (filter === 'Meta' || filter === 'Página web' || filter === 'Desarrollo' || filter === 'Referido') return contacts.filter(c => c.fuente === filter);
+  if (filter === 'fecha') {
+    const wrap = document.getElementById(wrapId);
+    const picker = wrap?.querySelector('select');
+    const date = picker?.value;
+    if (!date) { showToast('Selecciona una fecha', 'error'); return null; }
+    return contacts.filter(c => c.fecha === date);
+  }
+  return contacts;
+}
+
+// ==================== RECIPIENTS ====================
+function getUniqueDates() {
+  const dates = [...new Set(contacts.map(c => c.fecha).filter(Boolean))];
+  return dates.sort((a,b) => new Date(b) - new Date(a));
+}
+
+function onRecipientChange(sel, suffix) {
+  const fechaSel = document.getElementById('emailFecha' + suffix);
+  const countEl = document.getElementById('recipientCount' + suffix);
+  if (sel.value === 'fecha') {
+    fechaSel.style.display = 'block';
+    const dates = getUniqueDates();
+    fechaSel.innerHTML = '<option value="">Selecciona una fecha</option>' +
+      dates.map(d => {
+        const count = contacts.filter(c => c.fecha === d).length;
+        return `<option value="${d}">${d} (${count} contactos)</option>`;
+      }).join('');
+    fechaSel.onchange = () => updateRecipientCount(suffix);
+  } else {
+    fechaSel.style.display = 'none';
+    updateRecipientCount(suffix);
+  }
+}
+
+function updateRecipientCount(suffix) {
+  const targets = getTargetContacts(suffix);
+  const el = document.getElementById('recipientCount' + suffix);
+  if (el) el.textContent = targets.length > 0 ? `📬 ${targets.length} contactos seleccionados` : '';
+}
+
+function getTargetContacts(suffix) {
+  const filter = document.getElementById('emailRecipients' + suffix)?.value || 'all';
+  const fecha = document.getElementById('emailFecha' + suffix)?.value || '';
+  if (filter === 'all') return contacts;
+  if (filter === 'Lead' || filter === 'Cliente' || filter === 'Cerrado') return contacts.filter(c => c.estado === filter);
+  if (filter === 'La Floresta' || filter === 'Real del Lago' || filter === 'Vivace') return contacts.filter(c => c.desarrollo === filter);
+  if (filter === 'Meta' || filter === 'Pagina web' || filter === 'Desarrollo') return contacts.filter(c => c.fuente === filter);
+  if (filter === 'fecha') return fecha ? contacts.filter(c => c.fecha === fecha) : [];
+  return contacts;
+}
+
+// ==================== RECIPIENT HELPERS ====================
+function getDates() {
+  const dates = [...new Set(contacts.map(c => c.fecha).filter(Boolean))].sort().reverse();
+  return dates;
+}
+
+function onRecipientChange(sel, dateFilterId) {
+  const dateEl = document.getElementById(dateFilterId);
+  const recipientCountId = dateFilterId.replace('dateFilter', 'recipientCount');
+  if (sel.value === 'fecha') {
+    dateEl.style.display = '';
+    const dates = getDates();
+    dateEl.innerHTML = '<option value="">Selecciona un día</option>' + dates.map(d => `<option value="${d}">${d} (${contacts.filter(c=>c.fecha===d).length} contactos)</option>`).join('');
+  } else {
+    dateEl.style.display = 'none';
+    dateEl.value = '';
+    renderRecipientCount(sel.id, dateFilterId, recipientCountId);
+  }
+}
+
+function getTargets(recipientsId, dateFilterId) {
+  const val = document.getElementById(recipientsId)?.value || 'all';
+  const dateVal = document.getElementById(dateFilterId)?.value || '';
+  if (val === 'all') return contacts;
+  if (val === 'Lead' || val === 'Cliente' || val === 'Cerrado') return contacts.filter(c => c.estado === val);
+  if (val === 'La Floresta' || val === 'Real del Lago' || val === 'Vivace') return contacts.filter(c => c.desarrollo === val);
+  if (val === 'Meta' || val === 'Página web' || val === 'Desarrollo' || val === 'Referido') return contacts.filter(c => c.fuente === val);
+  if (val === 'fecha') return dateVal ? contacts.filter(c => c.fecha === dateVal) : [];
+  return contacts;
+}
+
+function renderRecipientCount(recipientsId, dateFilterId, countId) {
+  const targets = getTargets(recipientsId, dateFilterId);
+  const el = document.getElementById(countId);
+  if (el) el.textContent = targets.length ? `${targets.length} contacto${targets.length > 1 ? 's' : ''} seleccionado${targets.length > 1 ? 's' : ''}` : 'Sin contactos con este filtro';
 }
 
 // ==================== THEME ====================
