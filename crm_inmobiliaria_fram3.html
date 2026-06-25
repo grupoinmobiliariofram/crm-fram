@@ -291,6 +291,10 @@
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
       Contactos
     </div>
+    <div class="nav-item" onclick="showSection('citas',this)">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+      Citas <span id="navCitasBadge" style="display:none;background:var(--accent2);color:white;font-size:9px;font-weight:700;padding:1px 5px;border-radius:10px;margin-left:4px;"></span>
+    </div>
     <div class="nav-label">Desarrollos</div>
     <div class="nav-item" onclick="showSection('floresta',this)">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
@@ -678,6 +682,42 @@
       </div>
     </div>
 
+    <!-- CITAS -->
+    <div id="s-citas" class="section">
+      <div class="section-header">
+        <span class="section-title">Citas <span class="chip" id="citasCount">0</span></span>
+        <button class="btn btn-primary btn-sm" onclick="showModal('modalNuevaCita')">+ Nueva cita</button>
+      </div>
+
+      <!-- Alerta citas hoy -->
+      <div id="citasHoyAlert" style="display:none;background:rgba(245,197,66,0.1);border:1px solid var(--gold);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--gold);display:flex;align-items:center;gap:8px;">
+        📅 <span id="citasHoyText"></span>
+      </div>
+
+      <!-- Filtros -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+        <select class="form-select" style="max-width:150px;font-size:12px;" onchange="renderCitas()" id="citaFilterEstado">
+          <option value="">Todos los estados</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="Realizada">Realizada</option>
+          <option value="Cancelada">Cancelada</option>
+        </select>
+        <select class="form-select" style="max-width:160px;font-size:12px;" onchange="renderCitas()" id="citaFilterDesarrollo">
+          <option value="">Todos los desarrollos</option>
+          <option value="La Floresta">🌿 La Floresta</option>
+          <option value="Real del Lago">🏡 Real del Lago</option>
+          <option value="Vivace">🏙️ Vivace</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <div class="table-head" style="grid-template-columns:1fr 120px 80px 130px 110px 100px;">
+          <div>Contacto</div><div>Fecha</div><div>Hora</div><div>Desarrollo</div><div>Estado</div><div>Acciones</div>
+        </div>
+        <div id="citasTable"></div>
+      </div>
+    </div>
+
     <!-- IMPORTAR -->
     <div id="s-importar" class="section">
       <div class="section-header">
@@ -824,6 +864,49 @@
     <div style="display:flex;gap:8px;">
       <button class="btn" style="flex:1;" onclick="openIndividual(currentPerfilId);closeModal('modalPerfil')">✉️ Enviar correo</button>
       <button class="btn btn-primary" style="flex:1;" onclick="savePerfilChanges()">💾 Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL NUEVA CITA -->
+<div class="modal-overlay" id="modalNuevaCita">
+  <div class="modal" style="width:440px;">
+    <div class="modal-title" id="modalCitaTitle">Nueva cita</div>
+    <input type="hidden" id="citaEditId">
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Contacto</label>
+        <select class="form-select" id="citaContacto"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Desarrollo</label>
+        <select class="form-select" id="citaDesarrollo">
+          <option value="">Sin definir</option>
+          <option value="La Floresta">🌿 La Floresta</option>
+          <option value="Real del Lago">🏡 Real del Lago</option>
+          <option value="Vivace">🏙️ Vivace</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Fecha</label>
+        <input class="form-input" type="date" id="citaFecha">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Hora</label>
+        <input class="form-input" type="time" id="citaHora">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Estado</label>
+      <select class="form-select" id="citaEstado">
+        <option value="Pendiente">Pendiente</option>
+        <option value="Realizada">Realizada</option>
+        <option value="Cancelada">Cancelada</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('modalNuevaCita')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveCita()">Guardar cita</button>
     </div>
   </div>
 </div>
@@ -1386,6 +1469,7 @@ function renderDashboard() {
     <div class="metric-card"><div class="metric-label">Leads activos</div><div class="metric-val">${leads}</div></div>
     <div class="metric-card"><div class="metric-label">Clientes</div><div class="metric-val green">${clientes}</div></div>
     <div class="metric-card"><div class="metric-label">Correos enviados</div><div class="metric-val gold">${totalEmails}</div></div>
+    <div class="metric-card" style="cursor:pointer;" onclick="showSection('citas',document.querySelector('.nav-item[onclick*=citas]'))"><div class="metric-label">Citas pendientes</div><div class="metric-val red" id="dashCitasPendientes">${(citas||[]).filter(c=>c.estado==='Pendiente').length}</div></div>
   `;
 
   const search = (document.getElementById('dashSearch')?.value || '').toLowerCase();
@@ -1468,6 +1552,7 @@ function renderAll() {
   renderDashboard();
   renderContacts();
   renderEmails();
+  renderCitas();
 }
 
 // ==================== UI HELPERS ====================
@@ -1478,7 +1563,7 @@ function showSection(id, navEl) {
     document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
     navEl.classList.add('active');
   }
-  const titles = {dashboard:'Dashboard',contactos:'Contactos',floresta:'🌿 La Floresta',realdellago:'🏡 Real del Lago',vivace:'🏙️ Vivace',campana:'Nueva campaña general',desempeno:'Desempeño de correos',importar:'Importar CSV'};
+  const titles = {dashboard:'Dashboard',contactos:'Contactos',citas:'📅 Citas',floresta:'🌿 La Floresta',realdellago:'🏡 Real del Lago',vivace:'🏙️ Vivace',campana:'Nueva campaña general',desempeno:'Desempeño de correos',importar:'Importar CSV'};
   document.getElementById('topbarTitle').textContent = titles[id]||'';
 }
 
@@ -2058,6 +2143,177 @@ function getContactDates() {
     return parse(b) - parse(a);
   });
 }
+
+// ==================== CITAS ====================
+let citas = JSON.parse(localStorage.getItem('fram_citas') || '[]');
+
+function saveCitas() { localStorage.setItem('fram_citas', JSON.stringify(citas)); }
+
+function openNuevaCita() {
+  document.getElementById('modalCitaTitle').textContent = 'Nueva cita';
+  document.getElementById('citaEditId').value = '';
+  document.getElementById('citaContacto').innerHTML = contacts.map(c =>
+    `<option value="${c.id}">${c.nombre}</option>`
+  ).join('');
+  document.getElementById('citaDesarrollo').value = '';
+  document.getElementById('citaFecha').value = '';
+  document.getElementById('citaHora').value = '';
+  document.getElementById('citaEstado').value = 'Pendiente';
+  showModal('modalNuevaCita');
+}
+
+function openEditCita(id) {
+  const cita = citas.find(x => x.id === id);
+  if (!cita) return;
+  document.getElementById('modalCitaTitle').textContent = 'Editar cita';
+  document.getElementById('citaEditId').value = id;
+  document.getElementById('citaContacto').innerHTML = contacts.map(c =>
+    `<option value="${c.id}" ${c.id === cita.contactoId ? 'selected' : ''}>${c.nombre}</option>`
+  ).join('');
+  document.getElementById('citaDesarrollo').value = cita.desarrollo || '';
+  document.getElementById('citaFecha').value = cita.fecha || '';
+  document.getElementById('citaHora').value = cita.hora || '';
+  document.getElementById('citaEstado').value = cita.estado || 'Pendiente';
+  showModal('modalNuevaCita');
+}
+
+function saveCita() {
+  const contactoId = parseInt(document.getElementById('citaContacto').value);
+  const contacto = contacts.find(c => c.id === contactoId);
+  const fecha = document.getElementById('citaFecha').value;
+  const hora = document.getElementById('citaHora').value;
+  if (!contactoId || !fecha || !hora) { showToast('Completa contacto, fecha y hora', 'error'); return; }
+  const editId = document.getElementById('citaEditId').value;
+  if (editId) {
+    const idx = citas.findIndex(x => x.id === parseInt(editId));
+    if (idx !== -1) {
+      citas[idx] = { ...citas[idx], contactoId, contactoNombre: contacto?.nombre || '', desarrollo: document.getElementById('citaDesarrollo').value, fecha, hora, estado: document.getElementById('citaEstado').value };
+    }
+  } else {
+    citas.push({ id: Date.now(), contactoId, contactoNombre: contacto?.nombre || '', desarrollo: document.getElementById('citaDesarrollo').value, fecha, hora, estado: 'Pendiente', creadaEn: new Date().toLocaleDateString('es-MX') });
+  }
+  saveCitas();
+  closeModal('modalNuevaCita');
+  renderAll();
+  showToast('✅ Cita guardada', 'success');
+}
+
+function deleteCita(id) {
+  if (!confirm('¿Eliminar esta cita?')) return;
+  citas = citas.filter(x => x.id !== id);
+  saveCitas();
+  renderAll();
+  showToast('Cita eliminada', 'error');
+}
+
+function updateCitaEstado(id, estado) {
+  const idx = citas.findIndex(x => x.id === id);
+  if (idx !== -1) { citas[idx].estado = estado; saveCitas(); renderAll(); showToast(`✅ Cita marcada como ${estado}`, 'success'); }
+}
+
+function renderCitas() {
+  if (!citas) return;
+
+  // Badge en nav
+  const pendientes = citas.filter(c => c.estado === 'Pendiente').length;
+  const badge = document.getElementById('navCitasBadge');
+  if (badge) {
+    if (pendientes > 0) { badge.textContent = pendientes; badge.style.display = 'inline'; }
+    else { badge.style.display = 'none'; }
+  }
+
+  // Alerta citas hoy
+  const hoy = new Date().toISOString().split('T')[0];
+  const citasHoy = citas.filter(c => c.fecha === hoy && c.estado === 'Pendiente');
+  const alertEl = document.getElementById('citasHoyAlert');
+  const alertText = document.getElementById('citasHoyText');
+  if (alertEl && citasHoy.length > 0) {
+    alertEl.style.display = 'flex';
+    alertText.textContent = `Tienes ${citasHoy.length} cita${citasHoy.length > 1 ? 's' : ''} pendiente${citasHoy.length > 1 ? 's' : ''} hoy: ${citasHoy.map(c => `${c.contactoNombre} a las ${c.hora}`).join(', ')}`;
+  } else if (alertEl) { alertEl.style.display = 'none'; }
+
+  // Métrica en dashboard
+  const metricEl = document.getElementById('dashCitasPendientes');
+  if (metricEl) metricEl.textContent = pendientes;
+
+  // Tabla
+  const el = document.getElementById('citasTable');
+  if (!el) return;
+
+  const filtroEstado = document.getElementById('citaFilterEstado')?.value || '';
+  const filtroDesarrollo = document.getElementById('citaFilterDesarrollo')?.value || '';
+
+  let filtered = citas.filter(c => {
+    const matchEstado = !filtroEstado || c.estado === filtroEstado;
+    const matchDesarrollo = !filtroDesarrollo || c.desarrollo === filtroDesarrollo;
+    return matchEstado && matchDesarrollo;
+  }).sort((a, b) => {
+    if (a.fecha !== b.fecha) return a.fecha < b.fecha ? -1 : 1;
+    return a.hora < b.hora ? -1 : 1;
+  });
+
+  document.getElementById('citasCount').textContent = filtered.length;
+
+  if (!filtered.length) {
+    el.innerHTML = `<div class="empty"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><p>Sin citas aún. ¡Agenda la primera!</p></div>`;
+    return;
+  }
+
+  const estadoBadge = { Pendiente: 'badge-lead', Realizada: 'badge-cliente', Cancelada: 'badge-cerrado' };
+  const desarrolloIcon = { 'La Floresta': '🌿', 'Real del Lago': '🏡', 'Vivace': '🏙️' };
+
+  // Format date nicely
+  const fmtFecha = f => {
+    if (!f) return '—';
+    const [yr, mo, dy] = f.split('-');
+    return `${dy}/${mo}/${yr}`;
+  };
+  const fmtHora = h => {
+    if (!h) return '—';
+    const [hr, min] = h.split(':');
+    const h12 = hr % 12 || 12;
+    return `${h12}:${min} ${hr < 12 ? 'AM' : 'PM'}`;
+  };
+
+  el.innerHTML = filtered.map(c => {
+    const esHoy = c.fecha === hoy;
+    const rowStyle = esHoy && c.estado === 'Pendiente' ? 'border-left:3px solid var(--gold);' : '';
+    return `<div class="table-row" style="grid-template-columns:1fr 120px 80px 130px 110px 100px;${rowStyle}">
+      <div>
+        <div style="font-weight:500;">${c.contactoNombre || '—'}</div>
+        ${esHoy && c.estado === 'Pendiente' ? '<div style="font-size:10px;color:var(--gold);font-weight:600;">📅 HOY</div>' : ''}
+      </div>
+      <div style="font-size:12px;color:var(--text2);">${fmtFecha(c.fecha)}</div>
+      <div style="font-size:12px;color:var(--text2);">${fmtHora(c.hora)}</div>
+      <div style="font-size:12px;color:var(--text3);">${desarrolloIcon[c.desarrollo] || ''} ${c.desarrollo || '—'}</div>
+      <div>
+        <select class="form-select" style="font-size:11px;padding:3px 6px;" onchange="updateCitaEstado(${c.id}, this.value)">
+          <option ${c.estado==='Pendiente'?'selected':''}>Pendiente</option>
+          <option ${c.estado==='Realizada'?'selected':''}>Realizada</option>
+          <option ${c.estado==='Cancelada'?'selected':''}>Cancelada</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button class="btn btn-sm" onclick="openEditCita(${c.id})" title="Editar">✏️</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteCita(${c.id})" title="Eliminar">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Override showModal for citas to populate contact list
+const _origShowModal = window.showModal;
+window.showModal = function(id) {
+  if (id === 'modalNuevaCita') {
+    const sel = document.getElementById('citaContacto');
+    if (sel && !document.getElementById('citaEditId').value) {
+      sel.innerHTML = contacts.length
+        ? contacts.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('')
+        : '<option value="">Sin contactos</option>';
+    }
+  }
+  document.getElementById(id).classList.add('open');
+};
 
 // ==================== THEME ====================
 function toggleTheme() {
