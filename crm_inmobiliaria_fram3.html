@@ -1098,17 +1098,25 @@ async function sendIndividual() {
 }
 
 async function sendCampaign(filesInputId='files1', pdfUrl=null) {
-  // Auto-detect PDF based on active section
+  // Detect active section to use correct IDs
   const active = document.querySelector('.section.active');
-  if (!pdfUrl && active) {
-    if (active.id === 's-floresta') pdfUrl = PDF_FLORESTA;
-    else if (active.id === 's-vivace') pdfUrl = PDF_VIVACE;
-    else if (active.id === 's-realdellago') pdfUrl = PDF_LAGO;
+  let recipientsId = 'emailRecipients';
+  let wrapId = 'datePickerWrap1';
+  let subjectId = 'emailSubject';
+  let bodyId = 'emailBody';
+  if (active) {
+    if (active.id === 's-floresta') { recipientsId = 'emailRecipients'; wrapId = 'datePickerWrap1'; subjectId = 'emailSubject'; bodyId = 'emailBody'; }
+    else if (active.id === 's-campana') { recipientsId = 'emailRecipients'; wrapId = 'datePickerWrap0'; subjectId = 'emailSubject'; bodyId = 'emailBody'; }
+    if (!pdfUrl) {
+      if (active.id === 's-floresta') pdfUrl = PDF_FLORESTA;
+      else if (active.id === 's-vivace') pdfUrl = PDF_VIVACE;
+      else if (active.id === 's-realdellago') pdfUrl = PDF_LAGO;
+    }
   }
-  const subject = document.getElementById('emailSubject').value.trim();
-  const body = document.getElementById('emailBody').value.trim();
+  const subject = document.getElementById(subjectId).value.trim();
+  const body = document.getElementById(bodyId).value.trim();
   if (!subject || !body) { showToast('Completa asunto y mensaje', 'error'); return; }
-  const targets = getTargetContacts('emailRecipients', 'datePickerWrap1') || getTargetContacts('emailRecipients', 'datePickerWrap0');
+  const targets = getTargetContacts(recipientsId, wrapId);
   if (!targets) return;
   if (!targets.length) { showToast('No hay contactos para enviar', 'error'); return; }
   
@@ -2042,95 +2050,26 @@ function onRecipientsChange(selectId, wrapId) {
 function getTargetContacts(recipientsId, wrapId) {
   const filter = document.getElementById(recipientsId)?.value || 'all';
   if (filter === 'all') return contacts;
-  if (filter === 'Lead' || filter === 'Cliente' || filter === 'Cerrado') return contacts.filter(c => c.estado === filter);
-  if (filter === 'La Floresta' || filter === 'Real del Lago' || filter === 'Vivace') return contacts.filter(c => c.desarrollo === filter);
-  if (filter === 'Meta' || filter === 'Página web' || filter === 'Desarrollo' || filter === 'Referido') return contacts.filter(c => c.fuente === filter);
+  if (['Lead','Cliente','Cerrado'].includes(filter)) return contacts.filter(c => c.estado === filter);
+  if (['La Floresta','Real del Lago','Vivace'].includes(filter)) return contacts.filter(c => c.desarrollo === filter);
+  if (['Meta','Página web','Desarrollo','Referido'].includes(filter)) return contacts.filter(c => c.fuente === filter);
   if (filter === 'fecha') {
     const wrap = document.getElementById(wrapId);
     const picker = wrap?.querySelector('select');
     const date = picker?.value;
-    if (!date) { showToast('Selecciona una fecha', 'error'); return null; }
+    if (!date) { showToast('Selecciona una fecha para filtrar', 'error'); return null; }
     return contacts.filter(c => c.fecha === date);
   }
   return contacts;
 }
 
-// ==================== RECIPIENTS ====================
-function getUniqueDates() {
+// ==================== RECIPIENTS (versión única y correcta) ====================
+function getContactDates() {
   const dates = [...new Set(contacts.map(c => c.fecha).filter(Boolean))];
-  return dates.sort((a,b) => new Date(b) - new Date(a));
-}
-
-function onRecipientChange(sel, suffix) {
-  const fechaSel = document.getElementById('emailFecha' + suffix);
-  const countEl = document.getElementById('recipientCount' + suffix);
-  if (sel.value === 'fecha') {
-    fechaSel.style.display = 'block';
-    const dates = getUniqueDates();
-    fechaSel.innerHTML = '<option value="">Selecciona una fecha</option>' +
-      dates.map(d => {
-        const count = contacts.filter(c => c.fecha === d).length;
-        return `<option value="${d}">${d} (${count} contactos)</option>`;
-      }).join('');
-    fechaSel.onchange = () => updateRecipientCount(suffix);
-  } else {
-    fechaSel.style.display = 'none';
-    updateRecipientCount(suffix);
-  }
-}
-
-function updateRecipientCount(suffix) {
-  const targets = getTargetContacts(suffix);
-  const el = document.getElementById('recipientCount' + suffix);
-  if (el) el.textContent = targets.length > 0 ? `📬 ${targets.length} contactos seleccionados` : '';
-}
-
-function getTargetContacts(suffix) {
-  const filter = document.getElementById('emailRecipients' + suffix)?.value || 'all';
-  const fecha = document.getElementById('emailFecha' + suffix)?.value || '';
-  if (filter === 'all') return contacts;
-  if (filter === 'Lead' || filter === 'Cliente' || filter === 'Cerrado') return contacts.filter(c => c.estado === filter);
-  if (filter === 'La Floresta' || filter === 'Real del Lago' || filter === 'Vivace') return contacts.filter(c => c.desarrollo === filter);
-  if (filter === 'Meta' || filter === 'Pagina web' || filter === 'Desarrollo') return contacts.filter(c => c.fuente === filter);
-  if (filter === 'fecha') return fecha ? contacts.filter(c => c.fecha === fecha) : [];
-  return contacts;
-}
-
-// ==================== RECIPIENT HELPERS ====================
-function getDates() {
-  const dates = [...new Set(contacts.map(c => c.fecha).filter(Boolean))].sort().reverse();
-  return dates;
-}
-
-function onRecipientChange(sel, dateFilterId) {
-  const dateEl = document.getElementById(dateFilterId);
-  const recipientCountId = dateFilterId.replace('dateFilter', 'recipientCount');
-  if (sel.value === 'fecha') {
-    dateEl.style.display = '';
-    const dates = getDates();
-    dateEl.innerHTML = '<option value="">Selecciona un día</option>' + dates.map(d => `<option value="${d}">${d} (${contacts.filter(c=>c.fecha===d).length} contactos)</option>`).join('');
-  } else {
-    dateEl.style.display = 'none';
-    dateEl.value = '';
-    renderRecipientCount(sel.id, dateFilterId, recipientCountId);
-  }
-}
-
-function getTargets(recipientsId, dateFilterId) {
-  const val = document.getElementById(recipientsId)?.value || 'all';
-  const dateVal = document.getElementById(dateFilterId)?.value || '';
-  if (val === 'all') return contacts;
-  if (val === 'Lead' || val === 'Cliente' || val === 'Cerrado') return contacts.filter(c => c.estado === val);
-  if (val === 'La Floresta' || val === 'Real del Lago' || val === 'Vivace') return contacts.filter(c => c.desarrollo === val);
-  if (val === 'Meta' || val === 'Página web' || val === 'Desarrollo' || val === 'Referido') return contacts.filter(c => c.fuente === val);
-  if (val === 'fecha') return dateVal ? contacts.filter(c => c.fecha === dateVal) : [];
-  return contacts;
-}
-
-function renderRecipientCount(recipientsId, dateFilterId, countId) {
-  const targets = getTargets(recipientsId, dateFilterId);
-  const el = document.getElementById(countId);
-  if (el) el.textContent = targets.length ? `${targets.length} contacto${targets.length > 1 ? 's' : ''} seleccionado${targets.length > 1 ? 's' : ''}` : 'Sin contactos con este filtro';
+  return dates.sort((a, b) => {
+    const parse = d => { const [day,mon,yr] = d.split('/'); return new Date(yr,mon-1,day); };
+    return parse(b) - parse(a);
+  });
 }
 
 // ==================== THEME ====================
