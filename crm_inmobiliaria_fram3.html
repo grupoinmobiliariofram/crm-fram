@@ -221,6 +221,32 @@
   
   .stat-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
   .stat-row:last-child { border-bottom: none; }
+
+  /* BULK SELECT */
+  .bulk-bar {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--surface); border: 1px solid var(--accent);
+    border-radius: 12px; padding: 10px 18px;
+    display: flex; align-items: center; gap: 14px;
+    font-size: 13px; z-index: 500; box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    transition: all 0.25s; opacity: 0; pointer-events: none; white-space: nowrap;
+  }
+  .bulk-bar.visible { opacity: 1; pointer-events: all; }
+  .bulk-bar-count { font-weight: 600; color: var(--accent); }
+
+  .contact-checkbox {
+    width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer;
+    display: none; flex-shrink: 0;
+  }
+  .select-mode .contact-checkbox { display: block; }
+  .select-mode .contact-avatar { display: none; }
+
+  .table-row.selected-row { background: rgba(108,99,255,0.08); border-left: 2px solid var(--accent); }
+
+  #selectModeBtn.active { background: rgba(108,99,255,0.15); border-color: var(--accent); color: var(--accent); }
+
+  .header-checkbox { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; display: none; }
+  .select-mode-header .header-checkbox { display: block; }
 </style>
 </head>
 <body>
@@ -398,7 +424,7 @@
     <div id="s-contactos" class="section">
       <div class="section-header">
         <span class="section-title">Contactos <span class="chip" id="contactCount">0</span></span>
-        <div style="display:flex;gap:8px;">
+        <div style="display:flex;gap:8px;align-items:center;">
           <input class="form-input" style="width:200px;padding:7px 12px;" placeholder="Buscar..." oninput="filterContacts(this.value)" id="searchInput">
           <select class="form-select" style="width:120px;" onchange="filterContacts()" id="filterStatus">
             <option value="">Todos</option>
@@ -406,14 +432,25 @@
             <option value="Cliente">Cliente</option>
             <option value="Cerrado">Cerrado</option>
           </select>
+          <button class="btn btn-sm" id="selectModeBtn" onclick="toggleSelectMode()" title="Seleccionar contactos para borrar">☑️ Seleccionar</button>
         </div>
       </div>
       <div class="table-wrap">
-        <div class="table-head" style="grid-template-columns:36px 1fr 110px 90px 120px;">
-          <div></div><div>Contacto</div><div>Teléfono</div><div>Estado</div><div>Acciones</div>
+        <div class="table-head" id="contactsTableHead" style="grid-template-columns:36px 1fr 110px 90px 120px;">
+          <div><input type="checkbox" class="header-checkbox" id="selectAllCheckbox" onclick="toggleSelectAll(this.checked)" title="Seleccionar todos"></div>
+          <div>Contacto</div><div>Teléfono</div><div>Estado</div><div>Acciones</div>
         </div>
         <div id="contactsTable" style="max-height:calc(100vh - 220px);overflow-y:auto;"></div>
       </div>
+    </div>
+
+    <!-- BARRA FLOTANTE DE SELECCIÓN MÚLTIPLE -->
+    <div class="bulk-bar" id="bulkBar">
+      <span class="bulk-bar-count" id="bulkCount">0 seleccionados</span>
+      <button class="btn btn-sm" onclick="toggleSelectAll(true)">Seleccionar todos</button>
+      <button class="btn btn-sm" onclick="toggleSelectAll(false)">Quitar selección</button>
+      <button class="btn btn-sm btn-danger" onclick="deleteSelected()">🗑️ Eliminar seleccionados</button>
+      <button class="btn btn-sm" onclick="toggleSelectMode()">✕ Cancelar</button>
     </div>
 
     <!-- SECCIÓN LA FLORESTA -->
@@ -1184,6 +1221,96 @@ function savePerfilChanges() {
   showToast('✅ Perfil actualizado', 'success');
 }
 
+// ==================== BULK SELECT ====================
+let selectMode = false;
+let selectedIds = new Set();
+
+function toggleSelectMode() {
+  selectMode = !selectMode;
+  selectedIds.clear();
+  const btn = document.getElementById('selectModeBtn');
+  const head = document.getElementById('contactsTableHead');
+  const selectAllCb = document.getElementById('selectAllCheckbox');
+  if (selectMode) {
+    btn.classList.add('active');
+    btn.textContent = '✕ Cancelar selección';
+    head.classList.add('select-mode-header');
+  } else {
+    btn.classList.remove('active');
+    btn.textContent = '☑️ Seleccionar';
+    head.classList.remove('select-mode-header');
+    if (selectAllCb) selectAllCb.checked = false;
+    hideBulkBar();
+  }
+  renderContacts();
+}
+
+function toggleSelectAll(checked) {
+  const checkboxes = document.querySelectorAll('.contact-checkbox');
+  checkboxes.forEach(cb => {
+    cb.checked = checked;
+    const id = parseInt(cb.dataset.id);
+    if (checked) selectedIds.add(id);
+    else selectedIds.delete(id);
+    const row = cb.closest('.table-row');
+    if (row) row.classList.toggle('selected-row', checked);
+  });
+  updateBulkBar();
+}
+
+function toggleRowSelect(id, checked, rowEl) {
+  if (checked) selectedIds.add(id);
+  else selectedIds.delete(id);
+  rowEl.classList.toggle('selected-row', checked);
+  // Sync header checkbox
+  const allCbs = document.querySelectorAll('.contact-checkbox');
+  const allChecked = [...allCbs].every(cb => cb.checked);
+  const selectAllCb = document.getElementById('selectAllCheckbox');
+  if (selectAllCb) selectAllCb.checked = allChecked;
+  updateBulkBar();
+}
+
+function updateBulkBar() {
+  const bar = document.getElementById('bulkBar');
+  const countEl = document.getElementById('bulkCount');
+  if (!bar) return;
+  if (selectMode && selectedIds.size > 0) {
+    bar.classList.add('visible');
+    countEl.textContent = `${selectedIds.size} contacto${selectedIds.size !== 1 ? 's' : ''} seleccionado${selectedIds.size !== 1 ? 's' : ''}`;
+  } else {
+    bar.classList.remove('visible');
+  }
+}
+
+function hideBulkBar() {
+  const bar = document.getElementById('bulkBar');
+  if (bar) bar.classList.remove('visible');
+}
+
+function deleteSelected() {
+  if (selectedIds.size === 0) return;
+  const n = selectedIds.size;
+  if (!confirm(`¿Seguro que quieres eliminar ${n} contacto${n !== 1 ? 's' : ''}? Esta acción no se puede deshacer.`)) return;
+  contacts = contacts.filter(c => !selectedIds.has(c.id));
+  saveContacts();
+  selectedIds.clear();
+  selectMode = false;
+  const btn = document.getElementById('selectModeBtn');
+  const head = document.getElementById('contactsTableHead');
+  if (btn) { btn.classList.remove('active'); btn.textContent = '☑️ Seleccionar'; }
+  if (head) head.classList.remove('select-mode-header');
+  hideBulkBar();
+  renderAll();
+  showToast(`🗑️ Se eliminaron ${n} contacto${n !== 1 ? 's' : ''}`, 'error');
+}
+
+function rowClickSelect(id) {
+  const cb = document.querySelector(`.contact-checkbox[data-id="${id}"]`);
+  if (!cb) return;
+  cb.checked = !cb.checked;
+  toggleRowSelect(id, cb.checked, document.getElementById(`row-${id}`));
+}
+
 // ==================== RENDER ====================
 function filterContacts() { renderContacts(); }
 
@@ -1226,8 +1353,11 @@ function renderContacts() {
   el.innerHTML = filtered.map(c => {
     const col = getColor(c.nombre);
     const emailCount = getContactEmailCount(c.id);
-    return `<div class="table-row" style="grid-template-columns:36px 1fr 90px 80px 110px 70px 110px;" onclick="openPerfil(${c.id})" title="Ver perfil">
-      <div class="contact-avatar" style="background:${col.bg};color:${col.color}">${getInitials(c.nombre)}</div>
+    const isChecked = selectedIds.has(c.id);
+    const rowClass = isChecked ? 'table-row selected-row' : 'table-row';
+    return `<div class="${rowClass}" id="row-${c.id}" style="grid-template-columns:36px 1fr 90px 80px 110px 70px 110px;" onclick="${selectMode ? `rowClickSelect(${c.id})` : `openPerfil(${c.id})`}" title="${selectMode ? 'Seleccionar' : 'Ver perfil'}">
+      <input type="checkbox" class="contact-checkbox" data-id="${c.id}" ${isChecked ? 'checked' : ''} onclick="event.stopPropagation();toggleRowSelect(${c.id}, this.checked, this.closest('.table-row'))" style="${selectMode ? 'display:block' : 'display:none'}">
+      <div class="contact-avatar" style="background:${col.bg};color:${col.color};${selectMode ? 'display:none' : ''}">${getInitials(c.nombre)}</div>
       <div><div style="font-weight:500;">${c.nombre}</div><div style="font-size:11px;color:var(--text3);">${c.correo}</div></div>
       <div style="font-size:12px;color:var(--text2);">${c.telefono||'—'}</div>
       <div>${badgeHTML(c.estado)}</div>
