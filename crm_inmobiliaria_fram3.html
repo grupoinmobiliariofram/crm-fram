@@ -449,14 +449,108 @@
       <div class="section-header">
         <span class="section-title">🌿 La Floresta — Cuautitlán Izcalli</span>
       </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:20px;">
+
+      <!-- Info general -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:16px;">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;font-size:12px;">
           <div><span style="color:var(--text3);">Ubicación</span><br><span style="color:var(--text);">Bosques del Lago, Cuautitlán Izcalli</span></div>
-          <div><span style="color:var(--text3);">Precio</span><br><span style="color:var(--accent3);font-weight:500;">Desde $5,200,000</span></div>
-          <div><span style="color:var(--text3);">Tamaño</span><br><span style="color:var(--text);">158-160 m² | 3 rec.</span></div>
+          <div><span style="color:var(--text3);">Precio desde</span><br><span style="color:var(--accent3);font-weight:500;">$5,257,210</span></div>
           <div><span style="color:var(--text3);">Crédito</span><br><span style="color:var(--text);">Infonavit, Cofinavit, Hipotecario</span></div>
+          <div><span style="color:var(--text3);">Disponibles</span><br><span style="color:var(--accent3);font-weight:600;">11 casas</span></div>
         </div>
       </div>
+
+      <!-- Modelos -->
+      <div style="margin-bottom:16px;">
+        <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Modelos</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">Palma TT</div>
+            <div style="font-size:11px;color:var(--text3);line-height:1.8;">
+              🏗️ Construcción: 160 m²<br>
+              🌿 Terreno: 171 m²<br>
+              🛏️ 3 recámaras | Principal con vestidor, baño y terraza<br>
+              🚗 2 cajones de estacionamiento<br>
+              💰 <span style="color:var(--accent3);font-weight:600;">$5,257,210</span>
+            </div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">Palma TS</div>
+            <div style="font-size:11px;color:var(--text3);line-height:1.8;">
+              🏗️ Construcción: 160 m²<br>
+              🌿 Terreno: 171 m²<br>
+              🛏️ 3 recámaras | Principal con vestidor, baño y terraza<br>
+              🪟 Cancelería de cristal templado en baños<br>
+              🚗 2 cajones de estacionamiento<br>
+              💰 <span style="color:var(--accent3);font-weight:600;">$5,257,210</span>
+            </div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">Nogal TT / Nogal S</div>
+            <div style="font-size:11px;color:var(--text3);line-height:1.8;">
+              🏗️ Construcción: 158 m²<br>
+              🌿 Terreno: 186.08 m² (única disponible)<br>
+              🛏️ 3 recámaras | Principal con vestidor, baño y terraza<br>
+              📚 Estudio | Jardín privado<br>
+              🚗 2 cajones de estacionamiento<br>
+              💰 <span style="color:var(--accent3);font-weight:600;">$5,304,953</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sembrado -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Sembrado — Disponibilidad actual</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+          <div style="display:grid;grid-template-columns:50px 110px 100px 1fr 120px;padding:9px 14px;background:var(--surface2);font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid var(--border);">
+            <div>Casa</div><div>Modelo</div><div>Terreno m²</div><div>Precio</div><div>Estado</div>
+          </div>
+          <div style="max-height:340px;overflow-y:auto;">
+            ${[
+              [1,'Palma TT',188.66,null,'Vendida'],
+              [2,'Palma TT',171,'$5,257,210','Disponible'],
+              [3,'Palma TS',171,'$5,257,210','Disponible'],
+              [4,'Palma TS',171,'$5,257,210','Disponible'],
+              [5,'Palma TT',171,'$5,257,210','Disponible'],
+              [6,'Palma TT',171,'$5,257,210','Disponible'],
+              [7,'Palma TS',171,'$5,257,210','Disponible'],
+              [8,'Palma TS',171,'$5,257,210','Disponible'],
+              [9,'Palma TT',171,'$5,257,210','Disponible'],
+              [10,'Palma TT',171,'$5,257,210','Disponible'],
+              [11,'Nogal TT',259.59,null,'Vendida'],
+              [12,'Nogal TT',248.68,null,'Vendida'],
+              [13,'Nogal TT',271.85,null,'Vendida'],
+              [14,'Nogal TT',245.21,null,'Vendida'],
+              [15,'Nogal S',215.65,null,'Vendida'],
+              [16,'Nogal S',186.08,'$5,304,953','Disponible'],
+              [17,'Nogal TT',187.28,null,'Vendida'],
+              [18,'Nogal S',262.55,null,'Vendida'],
+              [19,'Nogal S',175.72,null,'Vendida'],
+              [20,'Nogal TT',175.66,null,'Vendida'],
+              [21,'Nogal TT',175.61,null,'Vendida'],
+              [22,'Nogal S',175.55,null,'Vendida'],
+              [23,'Nogal S',175.21,null,'Vendida'],
+              [24,'Nogal TT',173.16,null,'Vendida'],
+              [25,'Nogal TT',170.83,null,'Vendida'],
+              [26,'Nogal S',168.51,null,'Vendida'],
+              [27,'Nogal S',166.18,null,'Vendida'],
+              [28,'Nogal TT',163.86,null,'Vendida'],
+              [29,'Nogal TT',165.03,null,'Vendida'],
+              [30,'Nogal TT',169.96,null,'Vendida'],
+            ].map(([n,m,t,p,e]) => `
+              <div style="display:grid;grid-template-columns:50px 110px 100px 1fr 120px;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;${e==='Disponible'?'':'opacity:0.5;'}">
+                <div style="font-weight:600;color:var(--text2);">#${n}</div>
+                <div>${m}</div>
+                <div style="color:var(--text3);">${t}</div>
+                <div style="color:var(--accent3);font-weight:500;">${p||'—'}</div>
+                <div><span style="font-size:10px;padding:3px 8px;border-radius:20px;font-weight:600;${e==='Disponible'?'background:rgba(67,233,123,0.12);color:var(--accent3);border:1px solid rgba(67,233,123,0.3);':'background:rgba(255,107,107,0.1);color:var(--accent2);border:1px solid rgba(255,107,107,0.25);'}">${e}</span></div>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- Correos -->
       <div style="max-width:560px;">
         <div class="form-group">
           <label class="form-label">📋 Plantillas La Floresta</label>
@@ -482,14 +576,11 @@
             <option value="fecha">📅 Por fecha de registro</option>
           </select>
           <div id="datePickerWrap1" style="display:none;margin-top:6px;">
-            <select class="form-select" id="datePicker1" style="font-size:12px;">
-              <option value="">Selecciona una fecha...</option>
-            </select>
+            <select class="form-select" id="datePicker1" style="font-size:12px;"><option value="">Selecciona una fecha...</option></select>
             <div id="datePicker1_count" style="font-size:11px;color:var(--text3);margin-top:4px;"></div>
           </div>
         </div>
         <div class="form-group"><label class="form-label">Mensaje</label><textarea class="form-textarea" id="emailBody" placeholder="Hola {{nombre}},"></textarea></div>
-
         <div class="tag-info" style="margin-bottom:16px;">💡 Usa <strong>{{nombre}}</strong> para personalizar.</div>
         <div style="display:flex;gap:10px;">
           <button class="btn" onclick="previewEmail()" style="flex:1;">👁 Vista previa</button>
@@ -502,19 +593,93 @@
       </div>
     </div>
 
+      <!-- Modelos -->
+      <div style="margin-bottom:16px;">
+        <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Modelos</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">Palma TT / Palma TS</div>
+            <div style="font-size:11px;color:var(--text3);line-height:1.7;">
+              🏗️ Construcción: 160 m²<br>
+              🌿 Terreno: 171 m² (promedio)<br>
+              🛏️ 3 recámaras | Principal con vestidor, baño y terraza<br>
+              🚗 2 cajones de estacionamiento<br>
+              🪟 Cancelería de cristal templado (TS)<br>
+              💰 <span style="color:var(--accent3);font-weight:600;">$5,257,210</span>
+            </div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">Nogal TT / Nogal S</div>
+            <div style="font-size:11px;color:var(--text3);line-height:1.7;">
+              🏗️ Construcción: 158 m²<br>
+              🌿 Terreno: 186 m² (disponible)<br>
+              🛏️ 3 recámaras | Principal con vestidor, baño y terraza<br>
+              📚 Estudio | Jardín privado<br>
+              🚗 2 cajones de estacionamiento<br>
+              💰 <span style="color:var(--accent3);font-weight:600;">$5,304,953</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     <!-- SECCIÓN REAL DEL LAGO -->
     <div id="s-realdellago" class="section">
       <div class="section-header">
         <span class="section-title">🏡 Real del Lago — Nicolás Romero</span>
       </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:20px;">
+
+      <!-- Info general -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:16px;">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;font-size:12px;">
           <div><span style="color:var(--text3);">Ubicación</span><br><span style="color:var(--text);">Nicolás Romero, Edo. de México</span></div>
-          <div><span style="color:var(--text3);">Precio</span><br><span style="color:var(--accent3);font-weight:500;">Desde $2,200,000</span></div>
-          <div><span style="color:var(--text3);">Estilo</span><br><span style="color:var(--text);">Moderno | Acceso controlado</span></div>
+          <div><span style="color:var(--text3);">Precio desde</span><br><span style="color:var(--accent3);font-weight:500;">$2,180,000</span></div>
           <div><span style="color:var(--text3);">Crédito</span><br><span style="color:var(--text);">Infonavit, Cofinavit, Hipotecario</span></div>
+          <div><span style="color:var(--text3);">Disponibles</span><br><span style="color:var(--accent3);font-weight:600;">8 casas</span></div>
         </div>
       </div>
+
+      <!-- Modelo -->
+      <div style="margin-bottom:16px;">
+        <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Modelo único</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;max-width:320px;">
+          <div style="font-weight:700;font-size:13px;margin-bottom:6px;">Casa Real del Lago</div>
+          <div style="font-size:11px;color:var(--text3);line-height:1.8;">
+            🌿 Terreno: 83.26 m²<br>
+            🏠 Acceso controlado | Estilo moderno<br>
+            💳 Infonavit, Cofinavit, Hipotecario<br>
+            💰 <span style="color:var(--accent3);font-weight:600;">$2,180,000 – $2,200,000</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sembrado -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Sembrado — Disponibilidad actual</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;max-width:500px;">
+          <div style="display:grid;grid-template-columns:60px 110px 1fr;padding:9px 14px;background:var(--surface2);font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid var(--border);">
+            <div>Casa</div><div>Terreno m²</div><div>Precio</div>
+          </div>
+          <div>
+            ${[
+              [4,83.26,'$2,180,000'],
+              [8,83.26,'$2,180,000'],
+              [10,83.26,'$2,200,000'],
+              [13,83.26,'$2,200,000'],
+              [14,83.26,'$2,180,000'],
+              [15,83.26,'$2,180,000'],
+              [19,83.26,'$2,180,000'],
+              [20,83.26,'$2,180,000'],
+            ].map(([n,t,p]) => `
+              <div style="display:grid;grid-template-columns:60px 110px 1fr;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;">
+                <div style="font-weight:600;color:var(--text2);">#${n}</div>
+                <div style="color:var(--text3);">${t}</div>
+                <div style="color:var(--accent3);font-weight:500;">${p} <span style="font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;background:rgba(67,233,123,0.12);color:var(--accent3);border:1px solid rgba(67,233,123,0.3);margin-left:6px;">Disponible</span></div>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- Correos -->
       <div style="max-width:560px;">
         <div class="form-group">
           <label class="form-label">📋 Plantillas Real del Lago</label>
@@ -540,14 +705,11 @@
             <option value="fecha">📅 Por fecha de registro</option>
           </select>
           <div id="datePickerWrap2" style="display:none;margin-top:6px;">
-            <select class="form-select" id="datePicker2" style="font-size:12px;">
-              <option value="">Selecciona una fecha...</option>
-            </select>
+            <select class="form-select" id="datePicker2" style="font-size:12px;"><option value="">Selecciona una fecha...</option></select>
             <div id="datePicker2_count" style="font-size:11px;color:var(--text3);margin-top:4px;"></div>
           </div>
         </div>
         <div class="form-group"><label class="form-label">Mensaje</label><textarea class="form-textarea" id="emailBody2" placeholder="Hola {{nombre}},"></textarea></div>
-
         <div class="tag-info" style="margin-bottom:16px;">💡 Usa <strong>{{nombre}}</strong> para personalizar.</div>
         <div style="display:flex;gap:10px;">
           <button class="btn" onclick="previewEmail2()" style="flex:1;">👁 Vista previa</button>
@@ -559,20 +721,78 @@
         </div>
       </div>
     </div>
-
     <!-- SECCIÓN VIVACE -->
     <div id="s-vivace" class="section">
       <div class="section-header">
         <span class="section-title">🏙️ Vivace — Atizapán de Zaragoza</span>
       </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:20px;">
+
+      <!-- Info general -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:16px;">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;font-size:12px;">
-          <div><span style="color:var(--text3);">Ubicación</span><br><span style="color:var(--text);">Atizapán de Zaragoza (entrada UNITEC)</span></div>
-          <div><span style="color:var(--text3);">Precio</span><br><span style="color:var(--accent3);font-weight:500;">Casas desde $5,850,000</span></div>
-          <div><span style="color:var(--text3);">Tamaño</span><br><span style="color:var(--text);">198-208 m² | Triple seguridad</span></div>
-          <div><span style="color:var(--text3);">Enganche</span><br><span style="color:var(--text);">Desde $50,000</span></div>
+          <div><span style="color:var(--text3);">Ubicación</span><br><span style="color:var(--text);">Av. Granjas 407, Atizapán (entrada UNITEC)</span></div>
+          <div><span style="color:var(--text3);">Precio desde</span><br><span style="color:var(--accent3);font-weight:500;">$5,850,000</span></div>
+          <div><span style="color:var(--text3);">Pago inicial</span><br><span style="color:var(--text);">Desde $50,000</span></div>
+          <div><span style="color:var(--text3);">Disponibles</span><br><span style="color:var(--accent3);font-weight:600;">8 casas</span></div>
         </div>
       </div>
+
+      <!-- Modelos -->
+      <div style="margin-bottom:16px;">
+        <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Modelos</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">Modelo A</div>
+            <div style="font-size:11px;color:var(--text3);line-height:1.8;">
+              🌿 Terreno: 208 m²<br>
+              🏠 Casa con terraza, jardín y flex room<br>
+              🔐 Triple seguridad | Acceso TAG y QR<br>
+              💳 Crédito hipotecario<br>
+              💰 <span style="color:var(--accent3);font-weight:600;">$5,950,000</span>
+            </div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">Modelo B</div>
+            <div style="font-size:11px;color:var(--text3);line-height:1.8;">
+              🌿 Terreno: 198 m²<br>
+              🏠 Casa con terraza, jardín y flex room<br>
+              🔐 Triple seguridad | Acceso TAG y QR<br>
+              💳 Crédito hipotecario<br>
+              💰 <span style="color:var(--accent3);font-weight:600;">$5,850,000 – $6,150,000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sembrado -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Sembrado — Disponibilidad actual</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;max-width:560px;">
+          <div style="display:grid;grid-template-columns:60px 80px 100px 1fr;padding:9px 14px;background:var(--surface2);font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid var(--border);">
+            <div>Casa</div><div>Modelo</div><div>Terreno m²</div><div>Precio</div>
+          </div>
+          <div>
+            ${[
+              [1,'B',198,'$6,100,000'],
+              [6,'B',198,'$6,150,000'],
+              [15,'B',198,'$5,850,000'],
+              [16,'B',198,'$5,850,000'],
+              [19,'A',208,'$5,950,000'],
+              [20,'A',208,'$5,950,000'],
+              [22,'A',208,'$5,950,000'],
+              [23,'A',208,'$5,950,000'],
+            ].map(([n,m,t,p]) => `
+              <div style="display:grid;grid-template-columns:60px 80px 100px 1fr;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;">
+                <div style="font-weight:600;color:var(--text2);">#${n}</div>
+                <div>Modelo ${m}</div>
+                <div style="color:var(--text3);">${t}</div>
+                <div style="color:var(--accent3);font-weight:500;">${p} <span style="font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;background:rgba(67,233,123,0.12);color:var(--accent3);border:1px solid rgba(67,233,123,0.3);margin-left:6px;">Disponible</span></div>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- Correos -->
       <div style="max-width:560px;">
         <div class="form-group">
           <label class="form-label">📋 Plantillas Vivace</label>
@@ -598,14 +818,11 @@
             <option value="fecha">📅 Por fecha de registro</option>
           </select>
           <div id="datePickerWrap3" style="display:none;margin-top:6px;">
-            <select class="form-select" id="datePicker3" style="font-size:12px;">
-              <option value="">Selecciona una fecha...</option>
-            </select>
+            <select class="form-select" id="datePicker3" style="font-size:12px;"><option value="">Selecciona una fecha...</option></select>
             <div id="datePicker3_count" style="font-size:11px;color:var(--text3);margin-top:4px;"></div>
           </div>
         </div>
         <div class="form-group"><label class="form-label">Mensaje</label><textarea class="form-textarea" id="emailBody3" placeholder="Hola {{nombre}},"></textarea></div>
-
         <div class="tag-info" style="margin-bottom:16px;">💡 Usa <strong>{{nombre}}</strong> para personalizar.</div>
         <div style="display:flex;gap:10px;">
           <button class="btn" onclick="previewEmail3()" style="flex:1;">👁 Vista previa</button>
@@ -617,7 +834,6 @@
         </div>
       </div>
     </div>
-
     <!-- CAMPAÑA GENERAL -->
     <div id="s-campana" class="section">
       <div class="section-header">
