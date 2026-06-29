@@ -507,303 +507,6 @@
             <div>Casa</div><div>Modelo</div><div>Terreno m²</div><div>Precio</div><div>Estado</div>
           </div>
           <div id="sembradoFloresta" style="max-height:340px;overflow-y:auto;"></div>
-
-<!-- AUTH -->
-<div class="auth-screen" id="authScreen">
-  <div class="auth-card">
-    <div class="auth-logo">Inmobiliaria Fram</div>
-    <div class="auth-sub">CRM · Marketing & ATC</div>
-    <div class="auth-desc">Inicia sesión con Microsoft y pega tu API Key de Brevo para enviar correos profesionales.</div>
-    <div style="text-align:left;margin-bottom:16px;">
-      <label style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;">API Key de Brevo</label>
-      <input id="brevoKeyInput" type="password" placeholder="xkeysib-..." style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--text);font-family:'DM Sans',sans-serif;">
-      <p style="font-size:10px;color:var(--text3);margin-top:4px;">Encuéntrala en Brevo → Configuración → SMTP y API</p>
-    </div>
-    <button class="ms-btn" onclick="signIn()">
-      <svg width="20" height="20" viewBox="0 0 21 21" fill="none">
-        <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
-        <rect x="11" y="1" width="9" height="9" fill="#7FBA00"/>
-        <rect x="1" y="11" width="9" height="9" fill="#00A4EF"/>
-        <rect x="11" y="11" width="9" height="9" fill="#FFB900"/>
-      </svg>
-      Iniciar sesión con Microsoft
-    </button>
-    <p style="font-size:11px;color:var(--text3);margin-top:16px;">Tus datos se guardan localmente en este navegador.</p>
-  </div>
-</div>
-
-<!-- APP -->
-<div class="sidebar">
-  <div class="logo">
-    <div class="logo-title">Inmobiliaria<br>Fram</div>
-    <div class="logo-sub">CRM Pro</div>
-  </div>
-  <nav class="nav">
-    <div class="nav-label">Principal</div>
-    <div class="nav-item active" onclick="showSection('dashboard',this)">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/></svg>
-      Dashboard
-    </div>
-    <div class="nav-item" onclick="showSection('contactos',this)">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
-      Contactos
-    </div>
-    <div class="nav-item" onclick="showSection('citas',this)">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-      Citas <span id="navCitasBadge" style="display:none;background:var(--accent2);color:white;font-size:9px;font-weight:700;padding:1px 5px;border-radius:10px;margin-left:4px;"></span>
-    </div>
-    <div class="nav-label">Desarrollos</div>
-    <div class="nav-item" onclick="showSection('floresta',this)">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-      🌿 La Floresta
-    </div>
-    <div class="nav-item" onclick="showSection('realdellago',this)">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-      🏡 Real del Lago
-    </div>
-    <div class="nav-item" onclick="showSection('vivace',this)">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-      🏙️ Vivace
-    </div>
-    <div class="nav-label">Correos</div>
-    <div class="nav-item" onclick="showSection('campana',this)">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-      Nueva campaña
-    </div>
-    <div class="nav-item" onclick="showSection('desempeno',this)">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-      Desempeño
-    </div>
-    <div class="nav-label">Datos</div>
-    <div class="nav-item" onclick="showSection('importar',this)">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
-      Importar CSV
-    </div>
-  </nav>
-  <div class="user-box">
-    <div class="avatar" id="userAvatar">LV</div>
-    <div>
-      <div class="user-name" id="userName">Luis Velazquez</div>
-      <div class="user-role">Marketing & ATC</div>
-    </div>
-  </div>
-</div>
-
-<div class="main">
-  <div class="topbar">
-    <div class="topbar-title" id="topbarTitle">Dashboard</div>
-    <div class="topbar-actions">
-      <span id="authStatus" style="font-size:11px;color:var(--text3);display:flex;align-items:center;gap:6px;">
-        <span class="dot dot-red"></span>Sin conexión Outlook
-      </span>
-      <button class="btn btn-sm" onclick="toggleTheme()" id="themeBtn" title="Cambiar tema">🌙</button>
-      <button class="btn btn-sm btn-primary" onclick="showModal('modalNuevoContacto')">+ Contacto</button>
-    </div>
-  </div>
-
-  <div class="content">
-
-    <!-- DASHBOARD -->
-    <div id="s-dashboard" class="section active">
-      <div class="metrics" id="dashMetrics"></div>
-      <div class="section-header">
-        <span class="section-title" style="font-size:14px;">Actividad reciente</span>
-        <button class="btn btn-sm" onclick="resetDashFilters()">↺ Limpiar</button>
-      </div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
-        <input class="form-input" style="max-width:160px;font-size:12px;" placeholder="🔍 Buscar..." oninput="renderDashboard()" id="dashSearch">
-        <select class="form-select" style="max-width:120px;font-size:12px;" onchange="renderDashboard()" id="dashFilterStatus">
-          <option value="">Estado</option>
-          <option value="Lead">Lead</option>
-          <option value="Cliente">Cliente</option>
-          <option value="Cerrado">Cerrado</option>
-        </select>
-        <select class="form-select" style="max-width:150px;font-size:12px;" onchange="renderDashboard()" id="dashFilterDesarrollo">
-          <option value="">Desarrollo</option>
-          <option value="La Floresta">🌿 La Floresta</option>
-          <option value="Real del Lago">🏡 Real del Lago</option>
-          <option value="Vivace">🏙️ Vivace</option>
-        </select>
-        <select class="form-select" style="max-width:150px;font-size:12px;" onchange="renderDashboard()" id="dashFilterPresupuesto">
-          <option value="">Presupuesto</option>
-          <option value="Menos de $2M">Menos de $2M</option>
-          <option value="$2M - $3M">$2M - $3M</option>
-          <option value="$3M - $5M">$3M - $5M</option>
-          <option value="$5M - $6M">$5M - $6M</option>
-          <option value="Más de $6M">Más de $6M</option>
-        </select>
-        <select class="form-select" style="max-width:170px;font-size:12px;" onchange="renderDashboard()" id="dashFilterCredito">
-          <option value="">Crédito</option>
-          <option value="Infonavit aprobado">✅ Infonavit aprobado</option>
-          <option value="Hipotecario aprobado">✅ Hipotecario aprobado</option>
-          <option value="En proceso">⏳ En proceso</option>
-          <option value="Sin crédito">❌ Sin crédito</option>
-        </select>
-        <select class="form-select" style="max-width:140px;font-size:12px;" onchange="renderDashboard()" id="dashFilterFuente">
-          <option value="">Fuente</option>
-          <option value="Meta">Meta</option>
-          <option value="Página web">Página web</option>
-          <option value="Desarrollo">Desarrollo</option>
-          <option value="Referido">Referido</option>
-        </select>
-        <select class="form-select" style="max-width:150px;font-size:12px;" onchange="renderDashboard()" id="dashFilterCorreos">
-          <option value="">Correos enviados</option>
-          <option value="0">Sin correos</option>
-          <option value="1">1 o más</option>
-          <option value="3">3 o más</option>
-          <option value="5">5 o más</option>
-        </select>
-        <select class="form-select" style="max-width:140px;font-size:12px;" onchange="renderDashboard()" id="dashFilterOrden">
-          <option value="reciente">Más recientes</option>
-          <option value="antiguo">Más antiguos</option>
-          <option value="nombre">Nombre A-Z</option>
-          <option value="correos">Más correos</option>
-        </select>
-      </div>
-      <div class="table-wrap">
-        <div class="table-head" style="grid-template-columns:36px 1fr 90px 80px 110px 60px 100px;">
-          <div></div><div>Contacto</div><div>Teléfono</div><div>Estado</div><div>Desarrollo</div><div>📧</div><div>Último correo</div>
-        </div>
-        <div id="dashTable"></div>
-      </div>
-    </div>
-
-    <!-- CONTACTOS -->
-    <div id="s-contactos" class="section">
-      <div class="section-header">
-        <span class="section-title">Contactos <span class="chip" id="contactCount">0</span></span>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <input class="form-input" style="width:200px;padding:7px 12px;" placeholder="Buscar..." oninput="filterContacts(this.value)" id="searchInput">
-          <select class="form-select" style="width:120px;" onchange="filterContacts()" id="filterStatus">
-            <option value="">Todos</option>
-            <option value="Lead">Lead</option>
-            <option value="Cliente">Cliente</option>
-            <option value="Cerrado">Cerrado</option>
-          </select>
-          <button class="btn btn-sm" id="selectModeBtn" onclick="toggleSelectMode()" title="Seleccionar contactos para borrar">☑️ Seleccionar</button>
-        </div>
-      </div>
-      <div class="table-wrap">
-        <div class="table-head" id="contactsTableHead" style="grid-template-columns:36px 1fr 110px 90px 120px;">
-          <div><input type="checkbox" class="header-checkbox" id="selectAllCheckbox" onclick="toggleSelectAll(this.checked)" title="Seleccionar todos"></div>
-          <div>Contacto</div><div>Teléfono</div><div>Estado</div><div>Acciones</div>
-        </div>
-        <div id="contactsTable" style="max-height:calc(100vh - 220px);overflow-y:auto;"></div>
-      </div>
-    </div>
-
-    <!-- BARRA FLOTANTE DE SELECCIÓN MÚLTIPLE -->
-    <div class="bulk-bar" id="bulkBar">
-      <span class="bulk-bar-count" id="bulkCount">0 seleccionados</span>
-      <button class="btn btn-sm" onclick="toggleSelectAll(true)">Seleccionar todos</button>
-      <button class="btn btn-sm" onclick="toggleSelectAll(false)">Quitar selección</button>
-      <button class="btn btn-sm btn-danger" onclick="deleteSelected()">🗑️ Eliminar seleccionados</button>
-      <button class="btn btn-sm" onclick="toggleSelectMode()">✕ Cancelar</button>
-    </div>
-
-    <!-- SECCIÓN LA FLORESTA -->
-    <div id="s-floresta" class="section">
-      <div class="section-header">
-        <span class="section-title">🌿 La Floresta — Cuautitlán Izcalli</span>
-      </div>
-
-      <!-- Info general -->
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:16px;">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;font-size:12px;">
-          <div><span style="color:var(--text3);">Ubicación</span><br><span style="color:var(--text);">Bosques del Lago, Cuautitlán Izcalli</span></div>
-          <div><span style="color:var(--text3);">Precio desde</span><br><span style="color:var(--accent3);font-weight:500;">$5,257,210</span></div>
-          <div><span style="color:var(--text3);">Crédito</span><br><span style="color:var(--text);">Infonavit, Cofinavit, Hipotecario</span></div>
-          <div><span style="color:var(--text3);">Disponibles</span><br><span style="color:var(--accent3);font-weight:600;">11 casas</span></div>
-        </div>
-      </div>
-
-      <!-- Modelos -->
-      <div style="margin-bottom:16px;">
-        <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Modelos</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;">
-            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">Palma TT</div>
-            <div style="font-size:11px;color:var(--text3);line-height:1.8;">
-              🏗️ Construcción: 160 m²<br>
-              🌿 Terreno: 171 m²<br>
-              🛏️ 3 recámaras | Principal con vestidor, baño y terraza<br>
-              🚗 2 cajones de estacionamiento<br>
-              💰 <span style="color:var(--accent3);font-weight:600;">$5,257,210</span>
-            </div>
-          </div>
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;">
-            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">Palma TS</div>
-            <div style="font-size:11px;color:var(--text3);line-height:1.8;">
-              🏗️ Construcción: 160 m²<br>
-              🌿 Terreno: 171 m²<br>
-              🛏️ 3 recámaras | Principal con vestidor, baño y terraza<br>
-              🪟 Cancelería de cristal templado en baños<br>
-              🚗 2 cajones de estacionamiento<br>
-              💰 <span style="color:var(--accent3);font-weight:600;">$5,257,210</span>
-            </div>
-          </div>
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;">
-            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">Nogal TT / Nogal S</div>
-            <div style="font-size:11px;color:var(--text3);line-height:1.8;">
-              🏗️ Construcción: 158 m²<br>
-              🌿 Terreno: 186.08 m² (única disponible)<br>
-              🛏️ 3 recámaras | Principal con vestidor, baño y terraza<br>
-              📚 Estudio | Jardín privado<br>
-              🚗 2 cajones de estacionamiento<br>
-              💰 <span style="color:var(--accent3);font-weight:600;">$5,304,953</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sembrado -->
-      <div style="margin-bottom:20px;">
-        <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Sembrado — Disponibilidad actual</div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
-          <div style="display:grid;grid-template-columns:50px 110px 100px 1fr 120px;padding:9px 14px;background:var(--surface2);font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid var(--border);">
-            <div>Casa</div><div>Modelo</div><div>Terreno m²</div><div>Precio</div><div>Estado</div>
-          </div>
-          <div style="max-height:340px;overflow-y:auto;">
-            ${[
-              [1,'Palma TT',188.66,null,'Vendida'],
-              [2,'Palma TT',171,'$5,257,210','Disponible'],
-              [3,'Palma TS',171,'$5,257,210','Disponible'],
-              [4,'Palma TS',171,'$5,257,210','Disponible'],
-              [5,'Palma TT',171,'$5,257,210','Disponible'],
-              [6,'Palma TT',171,'$5,257,210','Disponible'],
-              [7,'Palma TS',171,'$5,257,210','Disponible'],
-              [8,'Palma TS',171,'$5,257,210','Disponible'],
-              [9,'Palma TT',171,'$5,257,210','Disponible'],
-              [10,'Palma TT',171,'$5,257,210','Disponible'],
-              [11,'Nogal TT',259.59,null,'Vendida'],
-              [12,'Nogal TT',248.68,null,'Vendida'],
-              [13,'Nogal TT',271.85,null,'Vendida'],
-              [14,'Nogal TT',245.21,null,'Vendida'],
-              [15,'Nogal S',215.65,null,'Vendida'],
-              [16,'Nogal S',186.08,'$5,304,953','Disponible'],
-              [17,'Nogal TT',187.28,null,'Vendida'],
-              [18,'Nogal S',262.55,null,'Vendida'],
-              [19,'Nogal S',175.72,null,'Vendida'],
-              [20,'Nogal TT',175.66,null,'Vendida'],
-              [21,'Nogal TT',175.61,null,'Vendida'],
-              [22,'Nogal S',175.55,null,'Vendida'],
-              [23,'Nogal S',175.21,null,'Vendida'],
-              [24,'Nogal TT',173.16,null,'Vendida'],
-              [25,'Nogal TT',170.83,null,'Vendida'],
-              [26,'Nogal S',168.51,null,'Vendida'],
-              [27,'Nogal S',166.18,null,'Vendida'],
-              [28,'Nogal TT',163.86,null,'Vendida'],
-              [29,'Nogal TT',165.03,null,'Vendida'],
-              [30,'Nogal TT',169.96,null,'Vendida'],
-            ].map(([n,m,t,p,e]) => `
-              <div style="display:grid;grid-template-columns:50px 110px 100px 1fr 120px;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;${e==='Disponible'?'':'opacity:0.5;'}">
-                <div style="font-weight:600;color:var(--text2);">#${n}</div>
-                <div>${m}</div>
-                <div style="color:var(--text3);">${t}</div>
-                <div style="color:var(--accent3);font-weight:500;">${p||'—'}</div>
-                <div><span style="font-size:10px;padding:3px 8px;border-radius:20px;font-weight:600;${e==='Disponible'?'background:rgba(67,233,123,0.12);color:var(--accent3);border:1px solid rgba(67,233,123,0.3);':'background:rgba(255,107,107,0.1);color:var(--accent2);border:1px solid rgba(255,107,107,0.25);'}">${e}</span></div>
-              </div>`).join('')}
-          </div>
         </div>
       </div>
 
@@ -2756,13 +2459,14 @@ window.showModal = function(id) {
   document.getElementById(id).classList.add('open');
 };
 
+
 // ==================== SEMBRADOS ====================
 function renderSembrados() {
-  const disponibleBadge = 'background:rgba(67,233,123,0.12);color:var(--accent3);border:1px solid rgba(67,233,123,0.3);';
-  const vendidaBadge = 'background:rgba(255,107,107,0.1);color:var(--accent2);border:1px solid rgba(255,107,107,0.25);';
+  const disp = 'background:rgba(67,233,123,0.12);color:var(--accent3);border:1px solid rgba(67,233,123,0.3);';
+  const vend = 'background:rgba(255,107,107,0.1);color:var(--accent2);border:1px solid rgba(255,107,107,0.25);';
 
-  // La Floresta
-  const florestaCasas = [
+  const elF = document.getElementById('sembradoFloresta');
+  if (elF) elF.innerHTML = [
     [1,'Palma TT',188.66,null,'Vendida'],
     [2,'Palma TT',171,'$5,257,210','Disponible'],
     [3,'Palma TS',171,'$5,257,210','Disponible'],
@@ -2793,55 +2497,34 @@ function renderSembrados() {
     [28,'Nogal TT',163.86,null,'Vendida'],
     [29,'Nogal TT',165.03,null,'Vendida'],
     [30,'Nogal TT',169.96,null,'Vendida'],
-  ];
-  const elF = document.getElementById('sembradoFloresta');
-  if (elF) elF.innerHTML = florestaCasas.map(([n,m,t,p,e]) =>
-    `<div style="display:grid;grid-template-columns:50px 110px 100px 1fr 120px;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;${e==='Disponible'?'':'opacity:0.5;'}">
-      <div style="font-weight:600;color:var(--text2);">#${n}</div>
-      <div>${m}</div>
-      <div style="color:var(--text3);">${t}</div>
-      <div style="color:var(--accent3);font-weight:500;">${p||'—'}</div>
-      <div><span style="font-size:10px;padding:3px 8px;border-radius:20px;font-weight:600;${e==='Disponible'?disponibleBadge:vendidaBadge}">${e}</span></div>
-    </div>`).join('');
+  ].map(([n,m,t,p,e]) => `<div style="display:grid;grid-template-columns:50px 110px 100px 1fr 120px;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;${e==='Disponible'?'':'opacity:0.5;}">
+    <div style="font-weight:600;color:var(--text2);">#${n}</div><div>${m}</div>
+    <div style="color:var(--text3);">${t}</div>
+    <div style="color:var(--accent3);font-weight:500;">${p||'—'}</div>
+    <div><span style="font-size:10px;padding:3px 8px;border-radius:20px;font-weight:600;${e==='Disponible'?disp:vend}">${e}</span></div>
+  </div>`).join('');
 
-  // Real del Lago
-  const lagoCasas = [
-    [4,83.26,'$2,180,000'],
-    [8,83.26,'$2,180,000'],
-    [10,83.26,'$2,200,000'],
-    [13,83.26,'$2,200,000'],
-    [14,83.26,'$2,180,000'],
-    [15,83.26,'$2,180,000'],
-    [19,83.26,'$2,180,000'],
-    [20,83.26,'$2,180,000'],
-  ];
   const elL = document.getElementById('sembradoRDL');
-  if (elL) elL.innerHTML = lagoCasas.map(([n,t,p]) =>
-    `<div style="display:grid;grid-template-columns:60px 110px 1fr;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;">
-      <div style="font-weight:600;color:var(--text2);">#${n}</div>
-      <div style="color:var(--text3);">${t}</div>
-      <div style="color:var(--accent3);font-weight:500;">${p} <span style="font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;${disponibleBadge}margin-left:6px;">Disponible</span></div>
-    </div>`).join('');
+  if (elL) elL.innerHTML = [
+    [4,83.26,'$2,180,000'],[8,83.26,'$2,180,000'],[10,83.26,'$2,200,000'],
+    [13,83.26,'$2,200,000'],[14,83.26,'$2,180,000'],[15,83.26,'$2,180,000'],
+    [19,83.26,'$2,180,000'],[20,83.26,'$2,180,000'],
+  ].map(([n,t,p]) => `<div style="display:grid;grid-template-columns:60px 110px 1fr;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;">
+    <div style="font-weight:600;color:var(--text2);">#${n}</div>
+    <div style="color:var(--text3);">${t}</div>
+    <div style="color:var(--accent3);font-weight:500;">${p} <span style="font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;${disp}margin-left:6px;">Disponible</span></div>
+  </div>`).join('');
 
-  // Vivace
-  const vivaceCasas = [
-    [1,'B',198,'$6,100,000'],
-    [6,'B',198,'$6,150,000'],
-    [15,'B',198,'$5,850,000'],
-    [16,'B',198,'$5,850,000'],
-    [19,'A',208,'$5,950,000'],
-    [20,'A',208,'$5,950,000'],
-    [22,'A',208,'$5,950,000'],
-    [23,'A',208,'$5,950,000'],
-  ];
   const elV = document.getElementById('sembradoVivace');
-  if (elV) elV.innerHTML = vivaceCasas.map(([n,m,t,p]) =>
-    `<div style="display:grid;grid-template-columns:60px 80px 100px 1fr;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;">
-      <div style="font-weight:600;color:var(--text2);">#${n}</div>
-      <div>Modelo ${m}</div>
-      <div style="color:var(--text3);">${t}</div>
-      <div style="color:var(--accent3);font-weight:500;">${p} <span style="font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;${disponibleBadge}margin-left:6px;">Disponible</span></div>
-    </div>`).join('');
+  if (elV) elV.innerHTML = [
+    [1,'B',198,'$6,100,000'],[6,'B',198,'$6,150,000'],[15,'B',198,'$5,850,000'],
+    [16,'B',198,'$5,850,000'],[19,'A',208,'$5,950,000'],[20,'A',208,'$5,950,000'],
+    [22,'A',208,'$5,950,000'],[23,'A',208,'$5,950,000'],
+  ].map(([n,m,t,p]) => `<div style="display:grid;grid-template-columns:60px 80px 100px 1fr;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;">
+    <div style="font-weight:600;color:var(--text2);">#${n}</div><div>Modelo ${m}</div>
+    <div style="color:var(--text3);">${t}</div>
+    <div style="color:var(--accent3);font-weight:500;">${p} <span style="font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;${disp}margin-left:6px;">Disponible</span></div>
+  </div>`).join('');
 }
 
 // ==================== THEME ====================
