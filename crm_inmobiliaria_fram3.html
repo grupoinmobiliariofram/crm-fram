@@ -2497,7 +2497,7 @@ function renderSembrados() {
     [28,'Nogal TT',163.86,null,'Vendida'],
     [29,'Nogal TT',165.03,null,'Vendida'],
     [30,'Nogal TT',169.96,null,'Vendida'],
-  ].map(([n,m,t,p,e]) => `<div style="display:grid;grid-template-columns:50px 110px 100px 1fr 120px;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;${e==='Disponible'?'':'opacity:0.5;}">
+  ].map(([n,m,t,p,e]) => `<div style="display:grid;grid-template-columns:50px 110px 100px 1fr 120px;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;${e==='Disponible'?'':'opacity:0.5;'}">
     <div style="font-weight:600;color:var(--text2);">#${n}</div><div>${m}</div>
     <div style="color:var(--text3);">${t}</div>
     <div style="color:var(--accent3);font-weight:500;">${p||'—'}</div>
