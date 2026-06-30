@@ -503,8 +503,8 @@
       <div style="margin-bottom:20px;">
         <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Sembrado — Disponibilidad actual</div>
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
-          <div style="display:grid;grid-template-columns:50px 110px 100px 1fr 120px;padding:9px 14px;background:var(--surface2);font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid var(--border);">
-            <div>Casa</div><div>Modelo</div><div>Terreno m²</div><div>Precio</div><div>Estado</div>
+          <div style="display:grid;grid-template-columns:50px 110px 100px 1fr 100px 110px;padding:9px 14px;background:var(--surface2);font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid var(--border);">
+            <div>Casa</div><div>Modelo</div><div>Terreno m²</div><div>Precio</div><div>Estado</div><div>Acciones</div>
           </div>
           <div id="sembradoFloresta" style="max-height:340px;overflow-y:auto;"></div>
         </div>
@@ -586,9 +586,9 @@
       <!-- Sembrado -->
       <div style="margin-bottom:20px;">
         <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Sembrado — Disponibilidad actual</div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;max-width:500px;">
-          <div style="display:grid;grid-template-columns:60px 110px 1fr;padding:9px 14px;background:var(--surface2);font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid var(--border);">
-            <div>Casa</div><div>Terreno m²</div><div>Precio</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;max-width:620px;">
+          <div style="display:grid;grid-template-columns:60px 110px 1fr 110px;padding:9px 14px;background:var(--surface2);font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid var(--border);">
+            <div>Casa</div><div>Terreno m²</div><div>Precio</div><div>Acciones</div>
           </div>
           <div id="sembradoRDL"></div>
         </div>
@@ -682,9 +682,9 @@
       <!-- Sembrado -->
       <div style="margin-bottom:20px;">
         <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Sembrado — Disponibilidad actual</div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;max-width:560px;">
-          <div style="display:grid;grid-template-columns:60px 80px 100px 1fr;padding:9px 14px;background:var(--surface2);font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid var(--border);">
-            <div>Casa</div><div>Modelo</div><div>Terreno m²</div><div>Precio</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;max-width:680px;">
+          <div style="display:grid;grid-template-columns:60px 80px 100px 1fr 110px;padding:9px 14px;background:var(--surface2);font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid var(--border);">
+            <div>Casa</div><div>Modelo</div><div>Terreno m²</div><div>Precio</div><div>Acciones</div>
           </div>
           <div id="sembradoVivace"></div>
         </div>
@@ -2436,8 +2436,11 @@ function renderSembrados() {
   const disp = 'background:rgba(67,233,123,0.12);color:var(--accent3);border:1px solid rgba(67,233,123,0.3);';
   const vend = 'background:rgba(255,107,107,0.1);color:var(--accent2);border:1px solid rgba(255,107,107,0.25);';
 
-  const elF = document.getElementById('sembradoFloresta');
-  if (elF) elF.innerHTML = [
+  // Estados guardados manualmente (vendida/disponible) por casa, override del estado base
+  const overrides = JSON.parse(localStorage.getItem('fram_sembrado_overrides') || '{}');
+  const getEstado = (dev, n, base) => overrides[`${dev}-${n}`] || base;
+
+  const florestaCasas = [
     [1,'Palma TT',188.66,null,'Vendida'],
     [2,'Palma TT',171,'$5,257,210','Disponible'],
     [3,'Palma TS',171,'$5,257,210','Disponible'],
@@ -2468,34 +2471,67 @@ function renderSembrados() {
     [28,'Nogal TT',163.86,null,'Vendida'],
     [29,'Nogal TT',165.03,null,'Vendida'],
     [30,'Nogal TT',169.96,null,'Vendida'],
-  ].map(([n,m,t,p,e]) => `<div style="display:grid;grid-template-columns:50px 110px 100px 1fr 120px;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;${e==='Disponible'?'':'opacity:0.5;'}">
+  ];
+  const elF = document.getElementById('sembradoFloresta');
+  if (elF) elF.innerHTML = florestaCasas.map(([n,m,t,p,baseE]) => {
+    const e = getEstado('floresta', n, baseE);
+    return `<div style="display:grid;grid-template-columns:50px 110px 100px 1fr 100px 110px;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;${e==='Disponible'?'':'opacity:0.6;'}">
     <div style="font-weight:600;color:var(--text2);">#${n}</div><div>${m}</div>
     <div style="color:var(--text3);">${t}</div>
     <div style="color:var(--accent3);font-weight:500;">${p||'—'}</div>
     <div><span style="font-size:10px;padding:3px 8px;border-radius:20px;font-weight:600;${e==='Disponible'?disp:vend}">${e}</span></div>
-  </div>`).join('');
+    <div><button class="btn btn-sm" style="font-size:10px;padding:4px 8px;" onclick="toggleVenta('floresta',${n},'${baseE}')">${e==='Disponible'?'🔴 Vender':'🟢 Disponible'}</button></div>
+  </div>`;
+  }).join('');
 
-  const elL = document.getElementById('sembradoRDL');
-  if (elL) elL.innerHTML = [
+  const lagoCasas = [
     [4,83.26,'$2,180,000'],[8,83.26,'$2,180,000'],[10,83.26,'$2,200,000'],
     [13,83.26,'$2,200,000'],[14,83.26,'$2,180,000'],[15,83.26,'$2,180,000'],
     [19,83.26,'$2,180,000'],[20,83.26,'$2,180,000'],
-  ].map(([n,t,p]) => `<div style="display:grid;grid-template-columns:60px 110px 1fr;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;">
+  ];
+  const elL = document.getElementById('sembradoRDL');
+  if (elL) elL.innerHTML = lagoCasas.map(([n,t,p]) => {
+    const e = getEstado('rdl', n, 'Disponible');
+    return `<div style="display:grid;grid-template-columns:60px 110px 1fr 110px;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;${e==='Disponible'?'':'opacity:0.6;'}">
     <div style="font-weight:600;color:var(--text2);">#${n}</div>
     <div style="color:var(--text3);">${t}</div>
-    <div style="color:var(--accent3);font-weight:500;">${p} <span style="font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;${disp}margin-left:6px;">Disponible</span></div>
-  </div>`).join('');
+    <div style="color:var(--accent3);font-weight:500;">${p} <span style="font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;${e==='Disponible'?disp:vend}margin-left:6px;">${e}</span></div>
+    <div><button class="btn btn-sm" style="font-size:10px;padding:4px 8px;" onclick="toggleVenta('rdl',${n},'Disponible')">${e==='Disponible'?'🔴 Vender':'🟢 Disponible'}</button></div>
+  </div>`;
+  }).join('');
 
-  const elV = document.getElementById('sembradoVivace');
-  if (elV) elV.innerHTML = [
+  const vivaceCasas = [
     [1,'B',198,'$6,100,000'],[6,'B',198,'$6,150,000'],[15,'B',198,'$5,850,000'],
     [16,'B',198,'$5,850,000'],[19,'A',208,'$5,950,000'],[20,'A',208,'$5,950,000'],
     [22,'A',208,'$5,950,000'],[23,'A',208,'$5,950,000'],
-  ].map(([n,m,t,p]) => `<div style="display:grid;grid-template-columns:60px 80px 100px 1fr;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;">
+  ];
+  const elV = document.getElementById('sembradoVivace');
+  if (elV) elV.innerHTML = vivaceCasas.map(([n,m,t,p]) => {
+    const e = getEstado('vivace', n, 'Disponible');
+    return `<div style="display:grid;grid-template-columns:60px 80px 100px 1fr 110px;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;${e==='Disponible'?'':'opacity:0.6;'}">
     <div style="font-weight:600;color:var(--text2);">#${n}</div><div>Modelo ${m}</div>
     <div style="color:var(--text3);">${t}</div>
-    <div style="color:var(--accent3);font-weight:500;">${p} <span style="font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;${disp}margin-left:6px;">Disponible</span></div>
-  </div>`).join('');
+    <div style="color:var(--accent3);font-weight:500;">${p} <span style="font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;${e==='Disponible'?disp:vend}margin-left:6px;">${e}</span></div>
+    <div><button class="btn btn-sm" style="font-size:10px;padding:4px 8px;" onclick="toggleVenta('vivace',${n},'Disponible')">${e==='Disponible'?'🔴 Vender':'🟢 Disponible'}</button></div>
+  </div>`;
+  }).join('');
+}
+
+function toggleVenta(dev, n, baseEstado) {
+  const overrides = JSON.parse(localStorage.getItem('fram_sembrado_overrides') || '{}');
+  const key = `${dev}-${n}`;
+  const current = overrides[key] || baseEstado;
+  const isDisponible = current === 'Disponible';
+  if (isDisponible) {
+    if (!confirm(`¿Marcar la casa #${n} como Vendida?`)) return;
+    overrides[key] = 'Vendida';
+  } else {
+    if (!confirm(`¿Marcar la casa #${n} como Disponible de nuevo?`)) return;
+    overrides[key] = 'Disponible';
+  }
+  localStorage.setItem('fram_sembrado_overrides', JSON.stringify(overrides));
+  renderSembrados();
+  showToast(isDisponible ? `🔴 Casa #${n} marcada como Vendida` : `🟢 Casa #${n} marcada como Disponible`, isDisponible ? 'error' : 'success');
 }
 
 // ==================== THEME ====================
